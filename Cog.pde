@@ -26,12 +26,10 @@ class Cog {
   }
   
   void selectLightCog(){
-    if(mousePressed == true) {
+    if(mousePressed) {
+      cogToggle = 1;
       cogColor = color(255, 120, 134);
-    }
-    else{
-      cogColor = cogColor;
-    }
+    }  
   }
  
   /**
@@ -52,6 +50,17 @@ class Cog {
   }
   **/
   
+  
+  void radialCog(float radius, float angle){
+    xPos = radius * cos(angle);
+    yPos = radius * sin(angle);
+    pushMatrix();
+    translate(width/2 + xPos, height/2 + yPos);
+    rotateCog();
+    popMatrix();
+  }
+  
+
   void centerCog(float x, float y){
     xPos = x;
     yPos = y;
