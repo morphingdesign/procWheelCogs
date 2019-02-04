@@ -10,6 +10,8 @@ Cog[] cogRadial5 = new Cog[24];  // Outer ring 2
 Cog[] cogRadial6 = new Cog[24];  // Outer ring 1 inner detail option
 Cog[] cogRadial7 = new Cog[24];  // Outer ring 2 inner detail option
 
+Bolt[] boltRadial = new Bolt[24]; // Ring of bolts
+
 // *******************************************************
 // Global variables
 
@@ -18,6 +20,7 @@ float reverseSpeed = speed * -1;
 int cogBkgdDiameterOuter;
 int cogBkgdDiameterInner;
 int numOfTeeth;   
+int numOfBolts;
 
 // Colors
 color colorWhite = color(255, 255, 255);
@@ -28,11 +31,13 @@ color colorLightBrown = color(161, 130, 71);
 color colorLightTan = color(255, 211, 129);
 color colorDarkTan = color(129, 84, 0);
 color colorOrange = color(255, 167, 0);
+color colorGradient = color(195, 135, 20);
 
 // Interactivity toggles
 int cogToggle = 0;
 
 // *******************************************************
+// Begin setup() function
 
 void setup() {
    size(1000, 1000);
@@ -48,14 +53,15 @@ void setup() {
   cogBkgdDiameterOuter = 100;
   cogBkgdDiameterInner = 75;
   numOfTeeth = 18;  
+  numOfBolts = 24;
   cogBkgd[0] = new Cog(speed * 2, cogBkgdDiameterOuter, cogBkgdDiameterInner, numOfTeeth, 5, colorLightBrown, colorDarkTeal, 0, 0);
   cogBkgd[1] = new Cog(speed * 2, int(cogBkgdDiameterOuter * 0.6), int(cogBkgdDiameterInner * 0.6), numOfTeeth, 3, colorLightBrown, colorWhite, 0, 1);
   cogBkgd[2] = new Cog(reverseSpeed * 2, cogBkgdDiameterOuter, cogBkgdDiameterInner, numOfTeeth, 5, colorDarkBrown, colorDarkTeal, radians(5), 0);
   cogBkgd[3] = new Cog(reverseSpeed * 2, int(cogBkgdDiameterOuter * 0.6), int(cogBkgdDiameterInner * 0.6), numOfTeeth, 3, colorDarkBrown, colorWhite, radians(5), 2);
   
   // Create central cogs
-  cogCentral[0] = new Cog(0, 725, 719, numOfTeeth, 80, colorWhite, colorWhite, 0, 0);        // White backdrop
-  cogCentral[1] = new Cog(0, 720, 719, numOfTeeth, 80, colorDarkTan, colorLightTeal, 0, 0);  // Stationary back cog
+  cogCentral[0] = new Cog(0, 725, 719, numOfBolts, 60, colorWhite, colorWhite, 0, 0);        // White backdrop
+  cogCentral[1] = new Cog(0, 720, 719, numOfBolts, 60, colorDarkTan, colorLightTeal, 0, 0);  // Stationary back cog
   cogCentral[2] = new Cog(0, 480, 10, 0, 80, colorDarkBrown, colorDarkBrown, 0, 0);          // Stationary cog
   cogCentral[3] = new Cog(reverseSpeed, 350, 10, 96, 3, colorLightTan, colorDarkBrown, 0, 0);
   cogCentral[4] = new Cog(reverseSpeed, 323, 10, 96, 3, colorDarkBrown, colorDarkBrown, 0, 0);
@@ -95,8 +101,26 @@ void setup() {
      cogRadial7[i] = new Cog(speed * 4, 15, 8, 18, 2.5, colorOrange, colorWhite, 0, 2);
   }
   
+  
+  // Ring of bolts
+  for(int i=0; i < boltRadial.length; i++){
+     boltRadial[i] = new Bolt(110, 40, 288, colorWhite, colorGradient, 0);
+  }
+  
+  
+  
+  
+  
+  
+  
 }
 
+// End setup() function
+// *******************************************************
+
+
+// *******************************************************
+// Start draw() function
 
 void draw() {
   background(colorDarkTeal);
@@ -220,20 +244,37 @@ void draw() {
      angle += TWO_PI / cogRadial7.length;
   }  
     
+  
+    
+  // *******************************************************
+  // Create radial pattern of bolts  
+
+  /**
+  angle = 0;
+  for(int i=0; i < boltRadial.length; i++){
+     boltRadial[i].radialBolt(angle);
+     angle += TWO_PI / boltRadial.length;
+  }    
+  **/
+
+  
+
+  for(int i=0; i < boltRadial.length; i++){
+     //boltRadial[i].allBolts();
+     boltRadial[i].unlockSafe();
+     
+  }
+  
+  
     
 }
 
 
+// End draw() function
+// *******************************************************
+
+
+
+
 // *******************************************************
 // Interactivity Functions
-
-void mousePressed(){
-  if(cogToggle == 0){
-    cogToggle = 1;
-    loop();
-  }
-  else{
-    cogToggle = 0;
-    noLoop();
-  }
-}
