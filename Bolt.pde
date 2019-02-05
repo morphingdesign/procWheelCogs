@@ -1,7 +1,7 @@
 // Class for all cog construction and animation
 class Bolt {
   
-  // Class Variables
+  // Class Variables 
   float safeXPos = width/2;
   float safeYPos = height/2;
   float safeShift = 0;
@@ -14,6 +14,7 @@ class Bolt {
   color boltColor2;
   float rotationOffset;
   float retraction;
+  boolean activate = false;
 
   
   // *******************************************************
@@ -34,21 +35,50 @@ class Bolt {
   // The following methods each perform separate actions and are sorted in the order of operations
   
 
-  
+  void mousePosition(){
+     if(mouseX > 0 && mouseY > 0){
+       openPartSafe = true;
+     }
+     else{
+       openPartSafe = false;
+     }
+  }
 
  
  
   // *******************************************************
   // Bolt basic actions  
   
+  
+  
+  void activateBolts(){
+     if(openPartSafe){
+       unlockPartSafe();
+     }
+     else if(cogToggle){
+       unlockFullSafe();
+     }
+     else{
+       lockSafe();
+     }
+  }
+  
+  
+  
+  
+  
+  void lockSafe(){
+    retraction = 0.8;
+    allBolts();
+  }
 
-  void unlockSafe(){
-    if(mousePressed){
-       retraction = 0.3;
-    }
-    else{
-       retraction  = 0.8;
-    }
+  void unlockPartSafe(){
+    retraction = 0.6;
+    allBolts();
+  }
+  
+  void unlockFullSafe(){
+    retraction = 0.3;
     allBolts();
   }
  
@@ -59,6 +89,7 @@ class Bolt {
   
   void allBolts(){  
     float angle = 0;
+
     for(int i=0; i < boltRadial.length; i++){
        boltRadial[i].retractBolt(angle);
        boltRadial[i].radialBolt(angle);

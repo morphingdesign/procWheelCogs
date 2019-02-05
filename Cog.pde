@@ -39,18 +39,42 @@ class Cog {
   // *******************************************************
   // Cog basic actions  
   
-  // Light up cog with a different color    
+  void illuminateTimeCog(color lightColor){
+    cogColor = lightColor;
+  }
+  
+
+  
+     
   void selectLightCog(){
     if(mousePressed) {
-      cogToggle = 1;
+      cogToggle = true;
       //cogColor = color(255, 120, 134);
     }  
   }
   
-  void illuminateTimeCog(color lightColor){
-    cogColor = lightColor;
+  
+  int randSelection(int arrayLength){
+    int randObject = int(random(1, arrayLength - 1));
+    return randObject;
   }
+  
+  
  
+  // Light up cog with a different color 
+  void illuminateLockCog(color lightColor, color baseColor){
+    if(int(second()) % 2 == 1 && openPartSafe){
+      cogColor = lightColor;
+    }
+    else if(cogToggle){
+      bkgdColor = lightColor;
+    }
+    else{
+      cogColor = baseColor;
+    }
+ 
+  }
+
 
   // *******************************************************
   // Cog types based on postions throughout sketch

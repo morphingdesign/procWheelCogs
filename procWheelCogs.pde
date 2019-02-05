@@ -34,7 +34,10 @@ color colorOrange = color(255, 167, 0);
 color colorGradient = color(195, 135, 20);
 
 // Interactivity toggles
-int cogToggle = 0;
+boolean openPartSafe = false;
+boolean cogToggle = false;
+int randCog1;
+int randCog2;
 
 // *******************************************************
 // Begin setup() function
@@ -101,12 +104,12 @@ void setup() {
      cogRadial7[i] = new Cog(speed * 4, 15, 8, 18, 2.5, colorOrange, colorWhite, 0, 2);
   }
   
-  
+
   // Ring of bolts
   for(int i=0; i < boltRadial.length; i++){
      boltRadial[i] = new Bolt(110, 40, 288, colorWhite, colorGradient, 0);
   }
-  
+
   
   
   
@@ -165,14 +168,13 @@ void draw() {
   // *******************************************************
   // Create central patterns of radial cogs
   
-  float angle = -90;
+  float angle = radians(270);
 
   // Seconds
   float radius = 45; 
   for(int i=0; i < cogRadial1.length; i++){
      cogRadial1[i].radialCog(radius, angle);
      angle += TWO_PI / cogRadial1.length;
-     
      int s = second();
      if(i == s/5){
        cogRadial1[i].illuminateTimeCog(colorLightTeal);
@@ -199,12 +201,16 @@ void draw() {
   
   // Hours
   radius = 140;
+  //angle = -90;
   for(int i=0; i < cogRadial3.length; i++){
      cogRadial3[i].radialCog(radius, angle);
      angle += TWO_PI / cogRadial3.length;
 
      int h = hour();
-     if(i == h/5){
+     if(h > 12){
+       h -= 12;
+     }
+     if(i == h + 1){
        cogRadial3[i].illuminateTimeCog(colorLightTeal);
      }
      else{
@@ -218,6 +224,8 @@ void draw() {
   for(int i=0; i < cogRadial4.length; i++){
      cogRadial4[i].radialCog(radius, angle);
      angle += TWO_PI / cogRadial4.length;
+     randCog1 = int(random(0, cogRadial4.length));  
+     cogRadial4[randCog1].illuminateLockCog(colorLightTeal, colorOrange);
   }
   
   // Outer ring 2
@@ -226,7 +234,12 @@ void draw() {
   for(int i=0; i < cogRadial5.length; i++){
      cogRadial5[i].radialCog(radius, angle);
      angle += TWO_PI / cogRadial5.length;
+     randCog2 = int(random(0, cogRadial5.length));  
+     cogRadial5[randCog2].illuminateLockCog(colorLightTeal, colorOrange);
   }
+  
+  
+  
     
   // Outer ring 1 design option
   radius = 195;
@@ -236,6 +249,7 @@ void draw() {
      angle += TWO_PI / cogRadial6.length;
   }
   
+  
   // Outer ring 2 design option
   radius = 220;
   angle = 25;
@@ -244,25 +258,54 @@ void draw() {
      angle += TWO_PI / cogRadial7.length;
   }  
     
+    
+  
+   
+
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  /**
+  int randCog1, randCog2;
+  for(int i=0; i < cogRadial4.length; i++){
+     randCog1 = int(random(0, cogRadial4.length));
+     cogRadial4[randCog1].illuminateLockCog(colorLightTeal, colorOrange);
+  }
+  for(int i=0; i < cogRadial5.length; i++){
+     randCog2 = int(random(0, cogRadial5.length));
+     cogRadial5[randCog2].illuminateLockCog(colorLightTeal, colorOrange);
+  }
+  
+  
+  
+  
+  /**
+  int randCog4 = cogRadial4[cogRadial4.length - 1].randSelection(cogRadial4.length);
+  cogRadial4[randCog4].illuminateLockCog(colorLightTeal, colorOrange);
+  
+  int randCog5 = cogRadial5[cogRadial5.length - 1].randSelection(cogRadial5.length);
+  cogRadial5[randCog5].illuminateLockCog(colorLightTeal, colorOrange);
+  **/
   
     
   // *******************************************************
   // Create radial pattern of bolts  
 
-  /**
-  angle = 0;
-  for(int i=0; i < boltRadial.length; i++){
-     boltRadial[i].radialBolt(angle);
-     angle += TWO_PI / boltRadial.length;
-  }    
-  **/
-
   
-
+  
   for(int i=0; i < boltRadial.length; i++){
-     //boltRadial[i].allBolts();
-     boltRadial[i].unlockSafe();
-     
+     boltRadial[i].mousePosition();
+     boltRadial[i].activateBolts();
   }
   
   
