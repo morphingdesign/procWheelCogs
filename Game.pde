@@ -8,13 +8,24 @@ class Game {
   Game(){}
 
   // *******************************************************
-  // Bolt Class Methods
-  // The following methods each perform separate actions and are sorted in the order of operations
+  // Game Class Methods
   
+  void splashScreen(){
+    if(!startGame){
+       
+    }
+    else{
+      
+    }
+    
+  }
   
+  void gameStart(){
+  
+  }
   
 
-  void gameStart(){
+  void activateGame(){
      if(mouseX > 0 && mouseY > 0){
        startGame = true;
      }
@@ -23,7 +34,7 @@ class Game {
      }
   }
 
-
+  
 
 
 

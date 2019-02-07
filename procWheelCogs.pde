@@ -18,26 +18,18 @@ the system and locking the safe for good.
 
 
 // *******************************************************
-// Array declarations
-
-
-//Bolt[] boltRadial = new Bolt[24]; // Ring of retractable bolts
-
-
-
-// *******************************************************
 // Global variables
 Scene mainScene;
 Portal safeDoor;
 Game clockLockGame;
 
-float speed = 1;
-float reverseSpeed = speed * -1;
 float safeXPos = width/2;
 float safeYPos = height/2;
 float safeShift = 0;
 float xPos;
 float yPos;
+float speed = 1;
+float reverseSpeed = speed * -1;
 
 // Colors
 color colorWhite = color(255, 255, 255);
@@ -59,7 +51,6 @@ int randCog2;
 float retraction;
 
 // *******************************************************
-// Begin setup() function
 
 void setup() {
   size(1000, 1000);
@@ -67,50 +58,27 @@ void setup() {
   mainScene = new Scene();
   safeDoor = new Portal();
   clockLockGame = new Game();
-
-
-
-/**
-  // Create ring of retractable bolts
-  for(int i=0; i < boltRadial.length; i++){
-     boltRadial[i] = new Bolt();
-  }
-**/
   
 }
 
-// End setup() function
-// *******************************************************
-
-
-// *******************************************************
-// Start draw() function
 
 void draw() {
   background(colorDarkTeal);
 
-  // *******************************************************
-  // Initiate game and interactivity
-  mainScene.createBkgdCogs();
-  mainScene.createSafeFrame();
-  safeDoor.create();
   
+  // Initiate game and interactivity
+  clockLockGame.activateGame(); 
+  clockLockGame.splashScreen();
+  
+  // Create scene elements
+  mainScene.createBkgdCogs();    // Rotating cogs in background
+  mainScene.createSafeFrame();   // Static frame of the safe
+  safeDoor.create();             // Door to the safe
+  
+  // Game actions
   //safeDoor.move();
-  clockLockGame.gameStart(); 
-
-
-/**
-  // *******************************************************
-  // Create radial pattern of bolts  
-  for(Bolt b : boltRadial){
-     b.boltPosition();
-     b.activateBolts();
-  }
-**/   
-   
+  
+ 
   
     
 }
-
-// End draw() function
-// *******************************************************

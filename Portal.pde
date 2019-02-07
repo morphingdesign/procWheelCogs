@@ -1,6 +1,7 @@
 // Class for all bolt construction and animation
 class Portal {
   
+  // Arrays
   Cog[] safeDoorCogs = new Cog[7];  // Single cogs aligned to sketch center
   Cog[] cogRadialSec = new Cog[12];  // Seconds
   Cog[] cogRadialMin = new Cog[12];  // Minutes
@@ -14,10 +15,6 @@ class Portal {
   // Class Variables 
   float safeXPos = width/2;
   float safeYPos = height/2;
-  //float safeShift = 0;
-  //float xPos;
-  //float yPos;
-  //float retraction;
 
   
   // *******************************************************
@@ -149,10 +146,8 @@ class Portal {
     
     // *******************************************************
     // Create radial pattern of bolts  
-    for(Bolt b : boltRadial){
-       boltPosition();
-       activateBolts();
-    }
+    boltPosition();
+    activateBolts();
     
   }
 
@@ -169,9 +164,6 @@ class Portal {
 
 
   // Bolt basic actions  
-  
-  
-  
   void activateBolts(){
      if(openPartSafe){
        unlockPartSafe();
@@ -186,17 +178,20 @@ class Portal {
   
   
   
-  
-  
   void lockSafe(){
     retraction = 0.8;
     allBolts();
   }
 
+
+
   void unlockPartSafe(){
     retraction = 0.6;
     allBolts();
   }
+  
+  
+  
   
   void unlockFullSafe(){
     retraction = 0.3;
@@ -210,7 +205,6 @@ class Portal {
 
   void allBolts(){  
     float angle = 0;
-
     for(int i=0; i < boltRadial.length; i++){
        boltRadial[i].retractBolt(angle);
        boltRadial[i].radialBolt(angle);
@@ -220,15 +214,12 @@ class Portal {
 
 
 
-
-
   void move(){
     for(int i=0; i < safeDoorCogs.length; i++){
       safeXPos += 1; 
       translate(safeXPos, safeYPos);
     }
   }
-
 
 
   void safeDoorBack(){

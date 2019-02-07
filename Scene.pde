@@ -1,19 +1,14 @@
 // Class for all bolt construction and animation
 class Scene {
   
-  
-  Cog[] cogBkgd = new Cog[4];      // Background pattern of cogs
+  // Arrays
+  Cog[] cogBkgd = new Cog[4];    // Background pattern of cogs
   Cog[] safeFrame = new Cog[3];  // Single cogs aligned to sketch center
   
   // Class Variables 
-  //float safeXPos = width/2;
-  //float safeYPos = height/2;
-  //float safeShift = 0;
- // float xPos;
-  //float yPos;
-
   int cogBkgdDiameterOuter;
   int cogBkgdDiameterInner;
+
   
   // *******************************************************
   // Constructor
@@ -61,6 +56,8 @@ class Scene {
       }
     }
   }
+
+
 
   void createSafeFrame(){
     for(int i=0; i < safeFrame.length; i++){
