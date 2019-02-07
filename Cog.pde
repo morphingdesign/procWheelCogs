@@ -53,12 +53,13 @@ class Cog {
     }  
   }
   
-  
+  //Code not used
+  /**
   int randSelection(int arrayLength){
     int randObject = int(random(1, arrayLength - 1));
     return randObject;
   }
-  
+  **/
   
  
   // Light up cog with a different color 
@@ -78,24 +79,32 @@ class Cog {
 
   // *******************************************************
   // Cog types based on postions throughout sketch
-  
-  /**
-  // Create a single column of copied cogs
-  void createCogColumn(float x, float y){
-    //for(float i = x; i < width + cogOffset; i += (cogOffset * 2)){
-    //  for(int j = y; j < height + cogDiameter; j += cogDiameter){
-    xPos = x;
-    yPos = y;
-    for(float i = xPos; i < width + cogOffset; i++){
-      for(float j = yPos; j < height + cogDiameter; j++){
-        pushMatrix();
-        translate(i, j);
-        this.rotateCog();
-        popMatrix();
+
+
+  // Create columns of background cogs
+  void createBkgdCogs(int arrayItem){
+    if(arrayItem < 2){
+      for(float i = 0; i < width + (cogBkgdDiameterOuter * cos(radians(30))); i += ((cogBkgdDiameterOuter * cos(radians(30))) * 2)){
+        for(float j = (cogBkgdDiameterOuter * cos(radians(50))); j < height + (cogBkgdDiameterOuter * cos(radians(30))); j += (cogBkgdDiameterOuter * cos(radians(50))) * 2){
+          pushMatrix();
+          translate(i, j);        
+          rotateCog();
+          popMatrix();
+        }
+      } 
+    }
+    else{
+      for(float i = ((cogBkgdDiameterOuter * cos(radians(30))) * 1); i < width + (cogBkgdDiameterOuter * cos(radians(30))); i += ((cogBkgdDiameterOuter * cos(radians(30))) * 2)){
+        for(float j = 0; j < height + (cogBkgdDiameterOuter * cos(radians(30))); j += (cogBkgdDiameterOuter * cos(radians(50))) * 2){
+          pushMatrix();
+          translate(i, j);
+          rotateCog();
+          popMatrix();
+        }
       }
-    }  
+    }
   }
-  **/
+ 
   
   // Create cogs located in center of sketch and in a radial pattern
   void radialCog(float radius, float angle){
