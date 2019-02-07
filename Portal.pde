@@ -2,7 +2,6 @@
 class Portal {
   
   Cog[] safeDoorCogs = new Cog[7];  // Single cogs aligned to sketch center
-  
   Cog[] cogRadialSec = new Cog[12];  // Seconds
   Cog[] cogRadialMin = new Cog[12];  // Minutes
   Cog[] cogRadialHr = new Cog[12];  // Hours
@@ -10,6 +9,7 @@ class Portal {
   Cog[] cogRadialOutRing2 = new Cog[24];  // Outer ring 2
   Cog[] cogRadialOutRing1Detail = new Cog[24];  // Outer ring 1 inner detail option
   Cog[] cogRadialOutRing2Detail = new Cog[24];  // Outer ring 2 inner detail option
+  Bolt[] boltRadial = new Bolt[24]; // Ring of retractable bolts
   
   // Class Variables 
   float safeXPos = width/2;
@@ -17,16 +17,17 @@ class Portal {
   //float safeShift = 0;
   //float xPos;
   //float yPos;
-  
+  //float retraction;
+
   
   // *******************************************************
   // Constructor
   
   Portal(){
     // Create central cogs
-    //safeDoorCogs[0] = new Cog(0, 725, 719, 24, 60, colorWhite, colorWhite, 0, 0);                    // White backdrop
-    //safeDoorCogs[1] = new Cog(0, 720, 719, 24, 60, colorDarkTan, colorLightTeal, 0, 0);              // Stationary back cog
-    //safeDoorCogs[2] = new Cog(0, 480, 10, 0, 80, colorDarkBrown, colorDarkBrown, 0, 0);              // Stationary cog
+    // The new Cog() function requires the following parameters: Cog(float Speed, int CogDiameterOuter, int CogDiameterOuter, 
+    // int NumberOfTeeth, float CogTeethProjection, color MainColor, color InnerColor, float RotationOffset, int DesignOption) 
+    // RotationOffset is to align adjacent cogs with each other Design options range from 1 - 2; 0 is no design option
     safeDoorCogs[0] = new Cog(reverseSpeed, 350, 10, 96, 3, colorLightTan, colorDarkBrown, 0, 0);
     safeDoorCogs[1] = new Cog(reverseSpeed, 323, 10, 96, 3, colorDarkBrown, colorDarkBrown, 0, 0);
     safeDoorCogs[2] = new Cog(speed, 228, 10, 48, 3.75, colorLightTan, colorDarkBrown, 0, 0);
@@ -56,6 +57,10 @@ class Portal {
        cogRadialOutRing2Detail[i] = new Cog(speed * 2, 15, 8, 18, 2.5, colorOrange, colorWhite, 0, 2); // Outer ring 2 detail option
     }
     
+    // Create ring of retractable bolts
+    for(int i=0; i < boltRadial.length; i++){
+       boltRadial[i] = new Bolt();
+    }
   }
 
   // *******************************************************
@@ -73,10 +78,6 @@ class Portal {
        safeDoorCogs[i].centerCog(safeXPos, safeYPos);
     }
     
-    
-    
-
-  
     // Create ring of cogs for time: Seconds
     float angle = radians(270);
     float radius = 45; 
@@ -146,9 +147,76 @@ class Portal {
     
     
     
+    // *******************************************************
+    // Create radial pattern of bolts  
+    for(Bolt b : boltRadial){
+       boltPosition();
+       activateBolts();
+    }
+    
   }
 
 
+  void boltPosition(){
+     if(startGame){
+       openPartSafe = true;
+     }
+     else{
+       openPartSafe = false;
+     }
+  }
+
+
+
+  // Bolt basic actions  
+  
+  
+  
+  void activateBolts(){
+     if(openPartSafe){
+       unlockPartSafe();
+     }
+     else if(cogToggle){
+       unlockFullSafe();
+     }
+     else{
+       lockSafe();
+     }
+  }
+  
+  
+  
+  
+  
+  void lockSafe(){
+    retraction = 0.8;
+    allBolts();
+  }
+
+  void unlockPartSafe(){
+    retraction = 0.6;
+    allBolts();
+  }
+  
+  void unlockFullSafe(){
+    retraction = 0.3;
+    allBolts();
+    //for(Cog c : cogRadialOutRing2Detail){
+    //  c.illuminateLockCog(colorLightTeal, colorOrange);
+    //}
+  }
+
+
+
+  void allBolts(){  
+    float angle = 0;
+
+    for(int i=0; i < boltRadial.length; i++){
+       boltRadial[i].retractBolt(angle);
+       boltRadial[i].radialBolt(angle);
+       angle += TWO_PI / boltRadial.length;
+    }  
+  }
 
 
 

@@ -12,7 +12,7 @@ class Bolt {
   float boltRadius = 288;
   float boltLength = 110;
   float boltWidth = 40;
-  float retraction;
+  //float retraction;
   boolean activate = false;
   
   
@@ -30,7 +30,7 @@ class Bolt {
   
   
   
-
+/**
   void boltPosition(){
      if(startGame){
        openPartSafe = true;
@@ -46,7 +46,7 @@ class Bolt {
   // Bolt basic actions  
   
   
-  
+  /**
   void activateBolts(){
      if(openPartSafe){
        unlockPartSafe();
@@ -95,6 +95,7 @@ class Bolt {
        angle += TWO_PI / boltRadial.length;
     }  
   }
+  **/
   
   void retractBolt(float angle){
     xPos = boltRadius * cos(angle);
