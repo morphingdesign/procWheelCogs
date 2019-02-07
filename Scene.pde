@@ -3,15 +3,17 @@ class Scene {
   
   
   Cog[] cogBkgd = new Cog[4];      // Background pattern of cogs
+  Cog[] safeFrame = new Cog[3];  // Single cogs aligned to sketch center
   
   // Class Variables 
-  float safeXPos = width/2;
-  float safeYPos = height/2;
-  float safeShift = 0;
-  float xPos;
-  float yPos;
+  //float safeXPos = width/2;
+  //float safeYPos = height/2;
+  //float safeShift = 0;
+ // float xPos;
+  //float yPos;
 
-  
+  int cogBkgdDiameterOuter;
+  int cogBkgdDiameterInner;
   
   // *******************************************************
   // Constructor
@@ -25,23 +27,18 @@ class Scene {
     cogBkgd[1] = new Cog(speed * 2, int(cogBkgdDiameterOuter * 0.6), int(cogBkgdDiameterInner * 0.6), numOfTeeth, 3, colorLightBrown, colorWhite, 0, 1);
     cogBkgd[2] = new Cog(reverseSpeed * 2, cogBkgdDiameterOuter, cogBkgdDiameterInner, numOfTeeth, 5, colorDarkBrown, colorDarkTeal, radians(5), 0);
     cogBkgd[3] = new Cog(reverseSpeed * 2, int(cogBkgdDiameterOuter * 0.6), int(cogBkgdDiameterInner * 0.6), numOfTeeth, 3, colorDarkBrown, colorWhite, radians(5), 2);
+  
+    // Create central cogs
+    safeFrame[0] = new Cog(0, 725, 719, 24, 60, colorWhite, colorWhite, 0, 0);                    // White backdrop
+    safeFrame[1] = new Cog(0, 720, 719, 24, 60, colorDarkTan, colorLightTeal, 0, 0);              // Stationary back cog
+    safeFrame[2] = new Cog(0, 480, 10, 0, 80, colorDarkBrown, colorDarkBrown, 0, 0);              // Stationary cog
   }
 
   // *******************************************************
   // Scene Class Methods
-  // The following methods each perform separate actions and are sorted in the order of operations
   
-  
-/**  
-  void sceneBkgd(){
-    // Create background pattern of rotating cogs
-    for(int i=0; i < cogBkgd.length; i++){
-       cogBkgd[i].createBkgdCogs(i);
-    }
-  }
-**/
 
-  void sceneBkgd(){
+  void createBkgdCogs(){
     for(float i = 0; i < width + (cogBkgdDiameterOuter * cos(radians(30))); i += ((cogBkgdDiameterOuter * cos(radians(30))) * 2)){
       for(float j = (cogBkgdDiameterOuter * cos(radians(50))); j < height + (cogBkgdDiameterOuter * cos(radians(30))); j += (cogBkgdDiameterOuter * cos(radians(50))) * 2){
         pushMatrix();
@@ -62,5 +59,10 @@ class Scene {
     }
   }
 
+  void createSafeFrame(){
+    for(int i=0; i < safeFrame.length; i++){
+       safeFrame[i].centerCog(width/2, height/2);
+    }
+  }
 
 }

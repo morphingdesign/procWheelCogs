@@ -2,11 +2,13 @@
 class Bolt {
   
   // Class Variables 
+  
   float safeXPos = width/2;
   float safeYPos = height/2;
-  float safeShift = 0;
-  float xPos;
-  float yPos;
+  //float safeShift = 0;
+  //float xPos;
+  //float yPos;
+  
   float boltRadius = 288;
   float boltLength = 110;
   float boltWidth = 40;
@@ -17,7 +19,10 @@ class Bolt {
   // *******************************************************
   // Constructor
   
-  Bolt(){}
+  Bolt(){
+    //xPos = x;
+    //yPos = y;
+  }
 
   // *******************************************************
   // Bolt Class Methods
@@ -71,9 +76,9 @@ class Bolt {
   void unlockFullSafe(){
     retraction = 0.3;
     allBolts();
-    for(Cog c : cogRadialOutRing2Detail){
-      c.illuminateLockCog(colorLightTeal, colorOrange);
-    }
+    //for(Cog c : cogRadialOutRing2Detail){
+    //  c.illuminateLockCog(colorLightTeal, colorOrange);
+    //}
   }
  
    

@@ -80,31 +80,6 @@ class Cog {
   // *******************************************************
   // Cog types based on postions throughout sketch
 
-/**
-  // Create columns of background cogs
-  void createBkgdCogs(int arrayItem){
-    if(arrayItem < 2){
-      for(float i = 0; i < width + (cogBkgdDiameterOuter * cos(radians(30))); i += ((cogBkgdDiameterOuter * cos(radians(30))) * 2)){
-        for(float j = (cogBkgdDiameterOuter * cos(radians(50))); j < height + (cogBkgdDiameterOuter * cos(radians(30))); j += (cogBkgdDiameterOuter * cos(radians(50))) * 2){
-          pushMatrix();
-          translate(i, j);        
-          rotateCog();
-          popMatrix();
-        }
-      } 
-    }
-    else{
-      for(float i = ((cogBkgdDiameterOuter * cos(radians(30))) * 1); i < width + (cogBkgdDiameterOuter * cos(radians(30))); i += ((cogBkgdDiameterOuter * cos(radians(30))) * 2)){
-        for(float j = 0; j < height + (cogBkgdDiameterOuter * cos(radians(30))); j += (cogBkgdDiameterOuter * cos(radians(50))) * 2){
-          pushMatrix();
-          translate(i, j);
-          rotateCog();
-          popMatrix();
-        }
-      }
-    }
-  }
-**/ 
   
   // Create cogs located in center of sketch and in a radial pattern
   void radialCog(float radius, float angle){

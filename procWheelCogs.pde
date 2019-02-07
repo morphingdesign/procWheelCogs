@@ -20,9 +20,7 @@ the system and locking the safe for good.
 // *******************************************************
 // Array declarations
 
-
-
-//Cog[] cogCentral = new Cog[10];  // Single cogs aligned to sketch center
+/**
 Cog[] cogRadialSec = new Cog[12];  // Seconds
 Cog[] cogRadialMin = new Cog[12];  // Minutes
 Cog[] cogRadialHr = new Cog[12];  // Hours
@@ -30,6 +28,7 @@ Cog[] cogRadialOutRing1 = new Cog[24];  // Outer ring 1
 Cog[] cogRadialOutRing2 = new Cog[24];  // Outer ring 2
 Cog[] cogRadialOutRing1Detail = new Cog[24];  // Outer ring 1 inner detail option
 Cog[] cogRadialOutRing2Detail = new Cog[24];  // Outer ring 2 inner detail option
+**/
 
 Bolt[] boltRadial = new Bolt[24]; // Ring of retractable bolts
 
@@ -42,8 +41,11 @@ Game clockLockGame;
 
 float speed = 1;
 float reverseSpeed = speed * -1;
-int cogBkgdDiameterOuter;
-int cogBkgdDiameterInner;
+float safeXPos = width/2;
+float safeYPos = height/2;
+float safeShift = 0;
+float xPos;
+float yPos;
 
 // Colors
 color colorWhite = color(255, 255, 255);
@@ -77,19 +79,7 @@ void setup() {
   safeDoor = new Portal();
   clockLockGame = new Game();
 
-/**  
-  // Create central cogs
-  cogCentral[0] = new Cog(0, 725, 719, 24, 60, colorWhite, colorWhite, 0, 0);                    // White backdrop
-  cogCentral[1] = new Cog(0, 720, 719, 24, 60, colorDarkTan, colorLightTeal, 0, 0);              // Stationary back cog
-  cogCentral[2] = new Cog(0, 480, 10, 0, 80, colorDarkBrown, colorDarkBrown, 0, 0);              // Stationary cog
-  cogCentral[3] = new Cog(reverseSpeed, 350, 10, 96, 3, colorLightTan, colorDarkBrown, 0, 0);
-  cogCentral[4] = new Cog(reverseSpeed, 323, 10, 96, 3, colorDarkBrown, colorDarkBrown, 0, 0);
-  cogCentral[5] = new Cog(speed, 228, 10, 48, 3.75, colorLightTan, colorDarkBrown, 0, 0);
-  cogCentral[6] = new Cog(speed, 196, 10, 48, 3.75, colorDarkBrown, colorDarkBrown, 0, 0);
-  cogCentral[7] = new Cog(reverseSpeed, 135, 10, 48, 2.5, colorLightTan, colorDarkBrown, 0, 0);
-  cogCentral[8] = new Cog(reverseSpeed, 107, 10, 48, 2.5, colorDarkBrown, colorDarkBrown, 0, 0);
-  cogCentral[9] = new Cog(speed / 4, 68, 30, 24, 2.5, colorLightTan, colorDarkBrown, 0, 0);
-**/
+/**
   // Create central pattern of radial cogs for clock
   for(int i=0; i < cogRadialSec.length; i++){                                                        // Ring for Seconds
      cogRadialSec[i] = new Cog(reverseSpeed * 2, 15, 8, 6, 2.5, colorOrange, colorDarkBrown, 0, 0);  
@@ -110,6 +100,8 @@ void setup() {
      cogRadialOutRing2[i] = new Cog(speed * 2, 34, 24, 18, 2.5, colorOrange, colorDarkBrown, 0, 0);  // Outer ring 2
      cogRadialOutRing2Detail[i] = new Cog(speed * 2, 15, 8, 18, 2.5, colorOrange, colorWhite, 0, 2); // Outer ring 2 detail option
   }
+**/
+
 
   // Create ring of retractable bolts
   for(int i=0; i < boltRadial.length; i++){
@@ -131,23 +123,17 @@ void draw() {
 
   // *******************************************************
   // Initiate game and interactivity
-  mainScene.sceneBkgd();
+  mainScene.createBkgdCogs();
+  mainScene.createSafeFrame();
   safeDoor.create();
+  
+  //safeDoor.move();
   clockLockGame.gameStart(); 
 
-
+/**
   // *******************************************************
   // Create central pattern of radial cogs used to define the door to the safe
 
-
-/**
-  // Create central cogs
-  // Sorted in array order from background to foreground
-  
-  for(int i=0; i < cogCentral.length; i++){
-     cogCentral[i].centerCog(width/2, height/2);
-  }
-**/  
   
   // Create ring of cogs for time: Seconds
   float angle = radians(270);
@@ -215,6 +201,8 @@ void draw() {
   randCog2 = int(random(0, cogRadialOutRing2.length)); 
   cogRadialOutRing2[randCog2].illuminateLockCog(colorLightTeal, colorOrange);
   
+  
+**/  
 
   // *******************************************************
   // Create radial pattern of bolts  
