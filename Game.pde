@@ -1,9 +1,6 @@
 // Class for all bolt construction and animation
 class Game {
   
-  // Class Variables 
-
-  
   
   // *******************************************************
   // Constructor
@@ -25,4 +22,10 @@ class Game {
        startGame = false;
      }
   }
+
+
+
+
+
+
 }

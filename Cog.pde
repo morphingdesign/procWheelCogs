@@ -80,7 +80,7 @@ class Cog {
   // *******************************************************
   // Cog types based on postions throughout sketch
 
-
+/**
   // Create columns of background cogs
   void createBkgdCogs(int arrayItem){
     if(arrayItem < 2){
@@ -104,7 +104,7 @@ class Cog {
       }
     }
   }
- 
+**/ 
   
   // Create cogs located in center of sketch and in a radial pattern
   void radialCog(float radius, float angle){
