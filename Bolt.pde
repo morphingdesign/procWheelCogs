@@ -4,6 +4,8 @@ class Bolt {
   // Class Variables 
   float safeXPos = width/2;
   float safeYPos = height/2;
+  float centerXPos;
+  float centerYPos;
   float boltRadius = 288;
   float boltLength = 110;
   float boltWidth = 40;
@@ -21,11 +23,13 @@ class Bolt {
 
   // *******************************************************
   // Create a ring of rectangles representing bolts with the capacity to retract   
-  void retractBolt(float angle){
+  void retractBolt(float x, float y, float angle){
+    centerXPos = x;
+    centerYPos = y;
     xPos = boltRadius * cos(angle);
     yPos = boltRadius * sin(angle);
     pushMatrix();
-    translate(safeXPos + safeShift + xPos, safeYPos + yPos);
+    translate(centerXPos + safeShift + xPos, centerYPos + yPos);
     rotate(angle);
     translate(boltLength * retraction, 0);
     createBolt(boltLength * 0.6, boltWidth * 0.8);
@@ -34,11 +38,13 @@ class Bolt {
 
   // *******************************************************
   // Create a ring of rectangles representing bolts 
-  void radialBolt(float angle){
+  void radialBolt(float x, float y, float angle){
+    centerXPos = x;
+    centerYPos = y;
     xPos = boltRadius * cos(angle);
     yPos = boltRadius * sin(angle);
     pushMatrix();
-    translate(safeXPos + safeShift + xPos, safeYPos + yPos);
+    translate(centerXPos + safeShift + xPos, centerYPos + yPos);
     rotate(angle);
     createBolt(boltLength, boltWidth);
     translate((boltLength / -2) - 2, 0);

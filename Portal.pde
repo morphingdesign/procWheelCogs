@@ -88,7 +88,7 @@ class Portal {
     float angle = radians(270);
     float radius = 45; 
     for(int i=0; i < cogRadialSec.length; i++){
-       cogRadialSec[i].radialCog(radius, angle);
+       cogRadialSec[i].radialCog(safeXPos, safeYPos, radius, angle);
        angle += TWO_PI / cogRadialSec.length;
        int s = second();
        if(i == s/5){
@@ -102,7 +102,7 @@ class Portal {
     // Create ring of cogs for time: Minutes
     radius = 85;
     for(int i=0; i < cogRadialMin.length; i++){
-       cogRadialMin[i].radialCog(radius, angle);
+       cogRadialMin[i].radialCog(safeXPos, safeYPos, radius, angle);
        angle += TWO_PI / cogRadialMin.length;
        int m = minute();
        if(i == m/5){
@@ -116,7 +116,7 @@ class Portal {
     // Create ring of cogs for time: Hours
     radius = 140;
     for(int i=0; i < cogRadialHr.length; i++){
-       cogRadialHr[i].radialCog(radius, angle);
+       cogRadialHr[i].radialCog(safeXPos, safeYPos, radius, angle);
        angle += TWO_PI / cogRadialHr.length;
        int h = hour();
        if(h > 12){
@@ -133,14 +133,14 @@ class Portal {
     // Create outer rings
     angle = 0;
     for(int i=0; i < cogRadialOutRing1.length; i++){
-       cogRadialOutRing1[i].radialCog(195, angle);
-       cogRadialOutRing1Detail[i].radialCog(195, angle);
+       cogRadialOutRing1[i].radialCog(safeXPos, safeYPos, 195, angle);
+       cogRadialOutRing1Detail[i].radialCog(safeXPos, safeYPos, 195, angle);
        angle += TWO_PI / cogRadialOutRing1.length;
     }
     angle = 25;
     for(int i=0; i < cogRadialOutRing2.length; i++){
-       cogRadialOutRing2[i].radialCog(220, angle);
-       cogRadialOutRing2Detail[i].radialCog(220, angle);
+       cogRadialOutRing2[i].radialCog(safeXPos, safeYPos, 220, angle);
+       cogRadialOutRing2Detail[i].radialCog(safeXPos, safeYPos, 220, angle);
        angle += TWO_PI / cogRadialOutRing2.length;
     }
     
@@ -160,43 +160,50 @@ class Portal {
   // Bolt basic actions  
   void activateBolts(){
      if(startGame){
-       unlockPartSafe();
+       //unlockPartSafe();
+       retraction = 0.6;
+       allBolts();
      }
-     else if(winGame){
-       unlockFullSafe();
+     else if(gameInPlay && winGame){
+       //unlockFullSafe();
+       retraction = 0.3;
+       allBolts();
      }
      else{
-       lockSafe();
+       lockBolts();
      }
   }
   
   
-  void lockSafe(){
+  void lockBolts(){
     retraction = 0.8;
     allBolts();
   }
 
 
-
+/**
   void unlockPartSafe(){
-    retraction = 0.6;
-    allBolts();
+    //retraction = 0.6;
+    //allBolts();
   }
   
   
   void unlockFullSafe(){
-    retraction = 0.3;
-    allBolts();
+    //retraction = 0.3;
+    //allBolts();
     //for(Cog c : cogRadialOutRing2Detail){
     //  c.illuminateLockCog(colorLightTeal, colorOrange);
     //}
+    println(winGame);
   }
+
+**/
 
   void allBolts(){  
     float angle = 0;
     for(int i=0; i < boltRadial.length; i++){
-       boltRadial[i].retractBolt(angle);
-       boltRadial[i].radialBolt(angle);
+       boltRadial[i].retractBolt(safeXPos, safeYPos, angle);
+       boltRadial[i].radialBolt(safeXPos, safeYPos, angle);
        angle += TWO_PI / boltRadial.length;
     }  
   }
@@ -232,7 +239,7 @@ class Portal {
       movePortal();       
     }
     else if(loseGame){
-      lockSafe();
+      lockBolts();
     }
     else{
     }

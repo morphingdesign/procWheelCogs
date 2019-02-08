@@ -2,8 +2,12 @@
 class Cog {
   
   // Class Variables
+  float safeXPos = width/2;
+  float safeYPos = height/2;
   float xPos;
   float yPos;
+  float centerXPos;
+  float centerYPos;
   float rSpeed;
   int cogDiameterOuter;
   int cogDiameterInner;
@@ -79,11 +83,14 @@ class Cog {
 
   
   // Create cogs located in center of sketch and in a radial pattern
-  void radialCog(float radius, float angle){
+  void radialCog(float x, float y, float radius, float angle){
+    centerXPos = x;
+    centerYPos = y;
     xPos = radius * cos(angle);
     yPos = radius * sin(angle);
     pushMatrix();
-    translate(width/2 + xPos, height/2 + yPos);
+    //translate(width/2 + xPos, height/2 + yPos);
+    translate(centerXPos + xPos, centerYPos + yPos);
     rotateCog();
     popMatrix();
   }

@@ -46,6 +46,7 @@ color colorButtonSelected = color(0);
 
 // Interactivity toggles
 boolean startGame = false;
+boolean gameInPlay = false;
 boolean winGame = false;
 boolean loseGame = false;
 boolean openPartSafe = false;

@@ -28,9 +28,7 @@ class GameAsset {
   
   
   
-  void gameStart(){
-     
-  }
+
   
 
 
@@ -39,10 +37,12 @@ class GameAsset {
   void activateGame(){
      if(hoverStartButton && mousePressed){
        startGame = true;
+       gameInPlay = true;
      }
      else{
        showIntroScreen();
      }
+     
   }
   
 
