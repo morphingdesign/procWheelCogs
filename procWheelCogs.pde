@@ -8,11 +8,9 @@
 
 INCLUDE PROJECT DESCRIPTION
 
-The safe's bolts have become partially unlocked and the system has malfunctioned
-Identify the broken cogs and select them to allow the system to fully
-open the safe.
-Select the red cogs to repair them before the time runs out completely disabling
-the system and locking the safe for good.
+The safe's bolts have become partially unlocked with the system malfunctioning.
+Click on the highlighted broken cogs to allow the system to fully open the safe.
+Winning will open the safe door revealing the safe's contents.
 
 **/
 
@@ -49,6 +47,8 @@ boolean startGame = false;
 boolean gameInPlay = false;
 boolean winGame = false;
 boolean loseGame = false;
+boolean resetGame = false;
+boolean lockSafe = true;
 boolean openPartSafe = false;
 boolean openFullSafe = false;
 float retraction;
@@ -58,9 +58,10 @@ float retraction;
 void setup() {
   size(1000, 1000);
 
+  clockLockGame = new GameAsset();
   mainScene = new Scene();
   safeDoor = new Portal();
-  clockLockGame = new GameAsset();
+  
   
 }
 
@@ -68,14 +69,23 @@ void setup() {
 void draw() {
   background(colorDarkTeal);
   
+  clockLockGame.gameState();
+  clockLockGame.activateGame();  // Initiate game
+  clockLockGame.resetGame();
+  
+  
   // Create scene elements
   mainScene.createBkgdCogs();    // Rotating cogs in background
   mainScene.createSafeFrame();   // Static frame of the safe
+  mainScene.createSafeContent();
   safeDoor.create();             // Door to the safe
   
   // Game actions
-  clockLockGame.activateGame();  // Initiate game
+  
+  clockLockGame.showIntroScreen();
+  //clockLockGame.showResetScreen();
   safeDoor.portalInPlay();
+  
   
   //safeDoor.movePortal();
     

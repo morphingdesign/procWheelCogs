@@ -12,6 +12,8 @@ class GameAsset {
   int alpha = 200;
   color colorStartButton = color(255, alpha);
   boolean hoverStartButton = false;
+  boolean introScreen = false;
+  boolean resetScreen = false;
   String startTitle = "CLOCK LOCK";
   String startGuide = "The safe has become partially unlocked with a malfunction. Click on the broken red cogs to open the safe.";
   String resetGuide = "Click the reset button to play again.";
@@ -28,10 +30,67 @@ class GameAsset {
   
   
   
-
+  void gameState(){
+    if(gameInPlay){
+      //println("gameInPlay:" + gameInPlay);
+      openPartSafe = true;
+      if(winGame){
+        openFullSafe = true;
+        lockSafe = false;
+        //gameInPlay = false;
+        //println("winGame:" + winGame);
+        if(resetGame){
+           resetState();
+        }
+      }
+      else if(loseGame){                // loseGame state
+        lockSafe = true;
+        //gameInPlay = false;
+        //println("loseGame:" + loseGame);
+        if(resetGame){
+           resetState();
+        }
+      }
+      else{
+        if(resetGame){
+          resetState();
+        }
+      }
+    }
+    else{
+      openPartSafe = false;
+      lockSafe = true;
+      resetGame = false;
+      //println("startGameElse:" + startGame);
+      //println("resetGameElse:" + resetGame);
+      //println("GameInPlayElse:" + gameInPlay);
+    }
+  }
   
 
-
+  void resetState(){
+    startGame = false;
+    gameInPlay = false;
+    winGame = false;
+    loseGame = false;
+    lockSafe = true;
+    openPartSafe = false;
+    openFullSafe = false;
+    safeXPos = 0;
+    safeYPos = 0;
+    hoverStartButton = false;
+    introScreen = false;
+    resetScreen = false;
+    //safeXPos = width/2;
+    //safeYPos = height/2;
+    println("resetGame:" + resetGame);
+    println("gameInPlay:" + gameInPlay);
+    println("startGame:" + startGame);
+    println("openFullSafe:" + openFullSafe);
+    println("safeXPos:" + safeXPos);
+    println("safeYPos:" + safeYPos);
+    
+  }
 
 
   void activateGame(){
@@ -39,23 +98,40 @@ class GameAsset {
        startGame = true;
        gameInPlay = true;
      }
+     else if(startGame && gameInPlay){
+       resetScreen = true;
+     }
      else{
-       showIntroScreen();
+       introScreen = true;
      }
      
   }
   
 
+  void resetGame(){
+    if(resetScreen && hoverStartButton && mousePressed){
+      resetGame = true;
+    }
+    else{
+      //showResetScreen();
+      showIntroScreen();
+    }
+  }
+
 
   void showIntroScreen(){
-    if(!startGame){
+    if(!startGame && !resetScreen){
       splashScreenContent(startTitle, startGuide);
       startButton("START");
+    }
+    else if(startGame && resetScreen){
+      splashScreenContent(startTitle, resetGuide);
+      startButton("RESET");
     }
   }
   
   void showResetScreen(){
-    if(winGame || loseGame){
+    if(startGame && resetScreen){
       splashScreenContent(startTitle, resetGuide);
       startButton("RESET");
     }

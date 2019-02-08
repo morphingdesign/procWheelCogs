@@ -159,18 +159,20 @@ class Portal {
 
   // Bolt basic actions  
   void activateBolts(){
-     if(startGame){
-       //unlockPartSafe();
-       retraction = 0.6;
-       allBolts();
-     }
-     else if(gameInPlay && winGame){
-       //unlockFullSafe();
-       retraction = 0.3;
-       allBolts();
+     if(openPartSafe){
+       if(openFullSafe){
+         retraction = 0.3;
+         allBolts();
+       }
+       else{
+         retraction = 0.6;
+         allBolts();
+         println("openPartSafe:" + openPartSafe);
+       }
      }
      else{
        lockBolts();
+       println("openPartSafe:" + openPartSafe);
      }
   }
   
@@ -182,11 +184,6 @@ class Portal {
 
 
 /**
-  void unlockPartSafe(){
-    //retraction = 0.6;
-    //allBolts();
-  }
-  
   
   void unlockFullSafe(){
     //retraction = 0.3;
@@ -236,12 +233,16 @@ class Portal {
   // Control position of portal
   void portalPosition(){
     if(winGame){
-      movePortal();       
-    }
-    else if(loseGame){
-      lockBolts();
+      if(resetGame){
+         resetPortal();
+      }
+      else{
+        movePortal();
+      }  
     }
     else{
+      //lockBolts();
+      println("here");
     }
   }
   
@@ -253,7 +254,14 @@ class Portal {
       translate(safeXPos, safeYPos);
     }
   }
-
+  
+  void resetPortal(){
+    for(int i=0; i < safeDoorCogs.length; i++){
+      safeXPos = width/2; 
+      translate(safeXPos, safeYPos);
+      lockBolts();
+    }
+  }
 
   // *******************************************************
   

@@ -8,6 +8,7 @@ class Scene {
   // Class Variables 
   int cogBkgdDiameterOuter;
   int cogBkgdDiameterInner;
+  PImage safeContent;
 
   
   // *******************************************************
@@ -30,6 +31,9 @@ class Scene {
     safeFrame[0] = new Cog(0, 725, 719, 24, 60, colorWhite, colorWhite, 0, 0);                    // White backdrop
     safeFrame[1] = new Cog(0, 720, 719, 24, 60, colorDarkTan, colorLightTeal, 0, 0);              // Stationary back cog
     safeFrame[2] = new Cog(0, 480, 10, 0, 80, colorDarkBrown, colorDarkBrown, 0, 0);              // Stationary cog
+    
+    // Image saved in the accompanying 'data' folder
+    safeContent = loadImage("safeContent.png");
   }
 
   // *******************************************************
@@ -62,6 +66,16 @@ class Scene {
   void createSafeFrame(){
     for(int i=0; i < safeFrame.length; i++){
        safeFrame[i].centerCog(width/2, height/2);
+    }
+  }
+
+  void createSafeContent(){
+    if(winGame){
+      int imageSize = 720;
+      pushMatrix();
+      translate(width/2, height/2);
+      image(safeContent, imageSize/-2, imageSize/-2, imageSize, imageSize);
+      popMatrix();
     }
   }
 
