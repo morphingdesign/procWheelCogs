@@ -43,23 +43,20 @@ class Cog {
     cogColor = lightColor;
   }
   
+  void updateCogColor(color updateColor){
+    cogColor = updateColor;
+  }
 
   
      
   void selectLightCog(){
     if(mousePressed) {
-      cogToggle = true;
+      openFullSafe = true;
       //cogColor = color(255, 120, 134);
     }  
   }
   
-  //Code not used
-  /**
-  int randSelection(int arrayLength){
-    int randObject = int(random(1, arrayLength - 1));
-    return randObject;
-  }
-  **/
+  
   
  
   // Light up cog with a different color 
@@ -67,7 +64,7 @@ class Cog {
     if(int(second()) % 2 == 1 && openPartSafe){
       cogColor = lightColor;
     }
-    else if(cogToggle){
+    else if(openFullSafe){
       bkgdColor = lightColor;
     }
     else{

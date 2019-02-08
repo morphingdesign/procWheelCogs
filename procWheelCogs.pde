@@ -21,7 +21,7 @@ the system and locking the safe for good.
 // Global variables
 Scene mainScene;
 Portal safeDoor;
-Game clockLockGame;
+GameAsset clockLockGame;
 
 float safeXPos = width/2;
 float safeYPos = height/2;
@@ -41,13 +41,15 @@ color colorLightTan = color(255, 211, 129);
 color colorDarkTan = color(129, 84, 0);
 color colorOrange = color(255, 167, 0);
 color colorGradient = color(195, 135, 20);
+color colorButtonHighlight = color(255);
+color colorButtonSelected = color(0);
 
 // Interactivity toggles
 boolean startGame = false;
+boolean winGame = false;
+boolean loseGame = false;
 boolean openPartSafe = false;
-boolean cogToggle = false;
-int randCog1;
-int randCog2;
+boolean openFullSafe = false;
 float retraction;
 
 // *******************************************************
@@ -57,18 +59,13 @@ void setup() {
 
   mainScene = new Scene();
   safeDoor = new Portal();
-  clockLockGame = new Game();
+  clockLockGame = new GameAsset();
   
 }
 
 
 void draw() {
   background(colorDarkTeal);
-
-  
-  // Initiate game and interactivity
-  clockLockGame.activateGame(); 
-  clockLockGame.splashScreen();
   
   // Create scene elements
   mainScene.createBkgdCogs();    // Rotating cogs in background
@@ -76,9 +73,9 @@ void draw() {
   safeDoor.create();             // Door to the safe
   
   // Game actions
-  //safeDoor.move();
+  clockLockGame.activateGame();  // Initiate game
+  safeDoor.portalInPlay();
   
- 
-  
+  //safeDoor.movePortal();
     
 }

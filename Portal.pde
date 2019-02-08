@@ -1,4 +1,4 @@
-// Class for all bolt construction and animation
+// Class for creating safe door
 class Portal {
   
   // Arrays
@@ -15,14 +15,18 @@ class Portal {
   // Class Variables 
   float safeXPos = width/2;
   float safeYPos = height/2;
-
+  int randCog1;
+  int randCog2;
+  int centerCogDiaOut = 68;
+  GameAsset centerCogButton;
+  boolean centerCogState = false;
   
   // *******************************************************
   // Constructor
   
   Portal(){
     // Create central cogs
-    // The new Cog() function requires the following parameters: Cog(float Speed, int CogDiameterOuter, int CogDiameterOuter, 
+    // The new Cog() function requires the following parameters: Cog(float Speed, int CogDiameterOuter, int CogDiameterInner, 
     // int NumberOfTeeth, float CogTeethProjection, color MainColor, color InnerColor, float RotationOffset, int DesignOption) 
     // RotationOffset is to align adjacent cogs with each other Design options range from 1 - 2; 0 is no design option
     safeDoorCogs[0] = new Cog(reverseSpeed, 350, 10, 96, 3, colorLightTan, colorDarkBrown, 0, 0);
@@ -31,7 +35,7 @@ class Portal {
     safeDoorCogs[3] = new Cog(speed, 196, 10, 48, 3.75, colorDarkBrown, colorDarkBrown, 0, 0);
     safeDoorCogs[4] = new Cog(reverseSpeed, 135, 10, 48, 2.5, colorLightTan, colorDarkBrown, 0, 0);
     safeDoorCogs[5] = new Cog(reverseSpeed, 107, 10, 48, 2.5, colorDarkBrown, colorDarkBrown, 0, 0);
-    safeDoorCogs[6] = new Cog(speed / 4, 68, 30, 24, 2.5, colorLightTan, colorDarkBrown, 0, 0);
+    safeDoorCogs[6] = new Cog(speed / 4, centerCogDiaOut, 30, 24, 2.5, colorLightTan, colorDarkBrown, 0, 0);
     
     // Create central pattern of radial cogs for clock
     for(int i=0; i < cogRadialSec.length; i++){                                                        // Ring for Seconds
@@ -58,13 +62,17 @@ class Portal {
     for(int i=0; i < boltRadial.length; i++){
        boltRadial[i] = new Bolt();
     }
+    
+    centerCogButton = new GameAsset();
   }
 
   // *******************************************************
   // Portal Class Methods
 
-  // Create central pattern of radial cogs used to define the door to the safe
+  // Create safe door portal geometry
   void create(){
+    
+    
     
     // Create background for safe door
     safeDoorBack();
@@ -74,6 +82,7 @@ class Portal {
     for(int i=0; i < safeDoorCogs.length; i++){
        safeDoorCogs[i].centerCog(safeXPos, safeYPos);
     }
+   
     
     // Create ring of cogs for time: Seconds
     float angle = radians(270);
@@ -141,41 +150,25 @@ class Portal {
     randCog2 = int(random(0, cogRadialOutRing2.length)); 
     cogRadialOutRing2[randCog2].illuminateLockCog(colorLightTeal, colorOrange);
     
-    
-    
-    
-    // *******************************************************
     // Create radial pattern of bolts  
-    boltPosition();
     activateBolts();
-    
   }
 
 
-  void boltPosition(){
-     if(startGame){
-       openPartSafe = true;
-     }
-     else{
-       openPartSafe = false;
-     }
-  }
-
-
+  // *******************************************************
 
   // Bolt basic actions  
   void activateBolts(){
-     if(openPartSafe){
+     if(startGame){
        unlockPartSafe();
      }
-     else if(cogToggle){
+     else if(winGame){
        unlockFullSafe();
      }
      else{
        lockSafe();
      }
   }
-  
   
   
   void lockSafe(){
@@ -191,8 +184,6 @@ class Portal {
   }
   
   
-  
-  
   void unlockFullSafe(){
     retraction = 0.3;
     allBolts();
@@ -200,8 +191,6 @@ class Portal {
     //  c.illuminateLockCog(colorLightTeal, colorOrange);
     //}
   }
-
-
 
   void allBolts(){  
     float angle = 0;
@@ -213,14 +202,7 @@ class Portal {
   }
 
 
-
-  void move(){
-    for(int i=0; i < safeDoorCogs.length; i++){
-      safeXPos += 1; 
-      translate(safeXPos, safeYPos);
-    }
-  }
-
+  // *******************************************************
 
   void safeDoorBack(){
     noStroke();
@@ -229,5 +211,76 @@ class Portal {
     fill(colorDarkBrown);
     ellipse(safeXPos, safeYPos, 480, 480);
   }
+
+
+
+  // *******************************************************
+  
+  
+  void portalInPlay(){
+    if(startGame){
+      cogButtons();
+      portalPosition();
+    }
+  }
+  
+  
+  
+  // Control position of portal
+  void portalPosition(){
+    if(winGame){
+      movePortal();       
+    }
+    else if(loseGame){
+      lockSafe();
+    }
+    else{
+    }
+  }
+  
+
+
+  void movePortal(){
+    for(int i=0; i < safeDoorCogs.length; i++){
+      safeXPos += 1; 
+      translate(safeXPos, safeYPos);
+    }
+  }
+
+
+  // *******************************************************
+  
+
+  
+  
+  void cogButtons(){
+    updateCenterCogState(int(safeXPos - centerCogDiaOut/2), int(safeYPos - centerCogDiaOut/2), centerCogDiaOut, centerCogDiaOut);
+    
+    if(centerCogState && mousePressed){
+      safeDoorCogs[6].updateCogColor(colorButtonSelected);
+      winGame = true;
+    }
+    else{
+      safeDoorCogs[6].updateCogColor(colorLightTan);
+    }
+    
+    
+  }
+
+
+
+  void updateCenterCogState(int bX, int bY, int bW, int bH){
+    if(centerCogButton.hoverRectButton(bX, bY, bW, bH)){
+      centerCogState = true;
+    }
+    else{
+      centerCogState = false;
+    }
+  }
+  
+  
+  
+  
+
 
 }

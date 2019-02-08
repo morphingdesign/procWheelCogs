@@ -1,4 +1,4 @@
-// Class for all bolt construction and animation
+// Class for background scene
 class Scene {
   
   // Arrays
@@ -15,7 +15,7 @@ class Scene {
   
   Scene(){
     // Create background pattern of rotating cogs
-    // The new Cog() function requires the following parameters: Cog(float Speed, int CogDiameterOuter, int CogDiameterOuter, 
+    // The new Cog() function requires the following parameters: Cog(float Speed, int CogDiameterOuter, int CogDiameterInner, 
     // int NumberOfTeeth, float CogTeethProjection, color MainColor, color InnerColor, float RotationOffset, int DesignOption) 
     // RotationOffset is to align adjacent cogs with each other Design options range from 1 - 2; 0 is no design option
     cogBkgdDiameterOuter = 100;
