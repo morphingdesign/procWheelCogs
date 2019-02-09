@@ -159,10 +159,22 @@ class Portal {
     cogRadialOutRing2[randCog2].illuminateOrbitCog(colorLightTeal, colorOrange);
 
     // Create radial pattern of bolts  
-    activateBolts();
+    //activateBolts();
+    if (openPartSafe) {
+      if (openFullSafe) {
+        retraction = 0.3;
+        allBolts();
+      } else {
+        retraction = 0.6;
+        allBolts();
+      }
+    } else {
+      retraction = 0.8;
+      allBolts();
+    }
   }
 
-
+/**
   // *******************************************************
   // Bolt basic actions  
   void activateBolts() {
@@ -175,19 +187,12 @@ class Portal {
         allBolts();
       }
     } else {
-      //lockBolts();
       retraction = 0.8;
       allBolts();
     }
   }
-
-  // *******************************************************
-/**
-  void lockBolts() {
-    retraction = 0.8;
-    allBolts();
-  }
 **/
+
   // *******************************************************
 
   void allBolts() {  
@@ -238,8 +243,6 @@ class Portal {
     for (int i=0; i < safeDoorCogs.length; i++) {
       safeXPos = width/2; 
       translate(safeXPos, safeYPos);
-      //lockBolts();
-      //activateBolts();
     }
   }
 
