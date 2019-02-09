@@ -14,21 +14,24 @@
 
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 // Global variables
+/** The majority of these global variables are used and defined to creat consistency 
+    throughout the sketch and its contents built from various classes.  
+**/
 
 Scene mainScene;                         // Static graphics
 Portal safeDoor;                         // Dynamics safe door graphics
 GameAsset clockLockGame;                 // Game interactivity
 
-//
-float safeXPos = width/2;
-float safeYPos = height/2;
-float safeShift = 0;
+// Positions
+float safeXPos = width/2;                // This defines the center of the safe door which
+float safeYPos = height/2;               // opens by moving from center to the right
 float xPos;
 float yPos;
-float speed = 1;
+float speed = 1;                         // Used to control the speed of the cog rotations
 float reverseSpeed = speed * -1;
 
 // Colors
+// Colors are all managed here to universally define the color scheme.
 color colorWhite = color(255);
 color colorBlack = color(0);
 color colorDarkTeal = color(0, 147, 170);
@@ -43,6 +46,9 @@ color colorButtonLight = color(175);
 color colorButtonDark = color(120);          
 
 // Game toggles
+/** Booleans are used to define the state of the game as it progresses and applied to 
+    various functions and methods to initiate shape changes
+**/    
 boolean startGame = false;
 boolean gameInPlay = false;
 boolean winGame = false;
@@ -52,9 +58,9 @@ boolean lockSafe = true;
 boolean openPartSafe = false;
 boolean openFullSafe = false;
 boolean cogSelected = false;
-float retraction;                        // Defines the state of bolt retraction for opening safe
 
 // Game Content
+float retraction;                        // Defines the state of bolt retraction for opening safe
 PImage[] safeContent = new PImage[2];    // Array of images can increase to add additional images
 int safeImageCounter = 0;                // Keeps track of the index for the safe content images
 
@@ -66,7 +72,7 @@ void setup() {
   clockLockGame = new GameAsset();                 // Initiates a new game with internal game logic
   mainScene = new Scene();                         // Initiates a new object for all static graphics
   safeContent[0] = loadImage("safeContent1.png");  // Images saved in the accompanying 'data' folder
-  safeContent[1] = loadImage("safeContent2.png");  
+  safeContent[1] = loadImage("safeContent2.png");  // Add new additional images here as needed for the array 
   safeDoor = new Portal();                         // Safe door that moves and drawn above the safe content
 }
 

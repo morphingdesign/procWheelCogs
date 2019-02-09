@@ -1,7 +1,7 @@
 // Class for interactivity
 class GameAsset {
   
-  // Class variables
+  // Class Variables
   int titleBoxX = 140;
   int titleBoxY = 40;
   int titleBoxW = 240;
@@ -18,35 +18,29 @@ class GameAsset {
   String startGuide = "The safe has partially unlocked with a malfunction. Click START and the highlighted broken center cog to open the safe.";
   String resetGuide = "Click the reset button to play again and reveal other contents in the safe.";
   
-  // *******************************************************
-  // Constructor
+  // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  // Class Constructor
   
   GameAsset(){
-  
   }
-
+  
+  // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  // Class Methods
+  
   // *******************************************************
-  // Game Class Methods
-  
-  
   
   void gameState(){
     if(gameInPlay){
-      //println("gameInPlay:" + gameInPlay);
       openPartSafe = true;
       if(winGame){
         openFullSafe = true;
         lockSafe = false;
-        //gameInPlay = false;
-        //println("winGame:" + winGame);
         if(resetGame){
            resetState();
         }
       }
       else if(loseGame){                // loseGame state
         lockSafe = true;
-        //gameInPlay = false;
-        //println("loseGame:" + loseGame);
         if(resetGame){
            resetState();
         }
@@ -61,12 +55,10 @@ class GameAsset {
       openPartSafe = false;
       lockSafe = true;
       resetGame = false;
-      //println("startGameElse:" + startGame);
-      //println("resetGameElse:" + resetGame);
-      //println("GameInPlayElse:" + gameInPlay);
     }
   }
   
+  // *******************************************************
 
   void resetState(){
     startGame = false;
@@ -82,17 +74,9 @@ class GameAsset {
     introScreen = false;
     resetScreen = false;
     safeImageCounter ++;
-    //safeXPos = width/2;
-    //safeYPos = height/2;
-    println("resetGame:" + resetGame);
-    println("gameInPlay:" + gameInPlay);
-    println("startGame:" + startGame);
-    println("openFullSafe:" + openFullSafe);
-    println("safeXPos:" + safeXPos);
-    println("safeYPos:" + safeYPos);
-    
   }
-
+  
+  // *******************************************************
 
   void activateGame(){
      if(hoverStartButton && mousePressed){
@@ -108,6 +92,7 @@ class GameAsset {
      
   }
   
+  // *******************************************************
 
   void resetGame(){
     if(resetScreen && hoverStartButton && mousePressed){
@@ -119,6 +104,7 @@ class GameAsset {
     }
   }
 
+  // *******************************************************
 
   void showGameScreen(){
     if(!startGame && !resetScreen){
@@ -131,8 +117,7 @@ class GameAsset {
     }
   }
   
-
-
+  // *******************************************************
   
   void splashScreenContent(String splashTitle, String splashText){
 
@@ -162,6 +147,7 @@ class GameAsset {
     popMatrix();
   }
 
+  // *******************************************************
 
   void startButton(String buttonText){
     int startButtonW = 140;
@@ -189,7 +175,7 @@ class GameAsset {
     popMatrix();
   }
 
-
+  // *******************************************************
 
   void updateStartButton(int bX, int bY, int bW, int bH){
     if(hoverButton(bX, bY, bW, bH)){
@@ -200,7 +186,7 @@ class GameAsset {
     }
   }
 
-
+  // *******************************************************
 
   boolean hoverButton(int x, int y, int w, int h){
     if(mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h){
@@ -210,6 +196,4 @@ class GameAsset {
       return false;
     }
   }
-
-
 }

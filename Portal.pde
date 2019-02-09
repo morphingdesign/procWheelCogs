@@ -1,7 +1,7 @@
 // Class for creating safe door
 class Portal {
 
-  // Arrays
+  // Class Arrays
   Cog[] safeDoorCogs = new Cog[7];  // Single cogs aligned to sketch center
   Cog[] cogRadialSec = new Cog[12];  // Seconds
   Cog[] cogRadialMin = new Cog[12];  // Minutes
@@ -11,8 +11,7 @@ class Portal {
   Cog[] cogRadialOutRing1Detail = new Cog[24];  // Outer ring 1 inner detail option
   Cog[] cogRadialOutRing2Detail = new Cog[24];  // Outer ring 2 inner detail option
   Bolt[] boltRadial = new Bolt[24]; // Ring of retractable bolts
-  //GameAsset[] brokenCogButton = new GameAsset[2];
-  //boolean[] brokenCogState = new boolean[2];
+
 
   // Class Variables 
   float safeXPos = width/2;
@@ -22,12 +21,12 @@ class Portal {
   int centerCogDiaOut = 68;
   GameAsset centerCogButton;
   boolean centerCogState = false;
+  boolean retractBolt = true;
   color brokenCogLight = colorLightTan;
   color brokenCogDark = colorWhite;
-  //color brokenCogDark = ( );
 
-  // *******************************************************
-  // Constructor
+  // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  // Class Constructor
 
   Portal() {
     // Create central cogs
@@ -78,9 +77,10 @@ class Portal {
      **/
   }
 
-  // *******************************************************
-  // Portal Class Methods
+  // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  // Class Methods
 
+  // *******************************************************
   // Create safe door portal geometry
   void create() {
 
@@ -163,7 +163,6 @@ class Portal {
 
 
   // *******************************************************
-
   // Bolt basic actions  
   void activateBolts() {
     if (openPartSafe) {
@@ -173,30 +172,31 @@ class Portal {
       } else {
         retraction = 0.6;
         allBolts();
-        println("openPartSafe:" + openPartSafe);
       }
     } else {
       lockBolts();
-      println("openPartSafe:" + openPartSafe);
     }
   }
 
+  // *******************************************************
 
   void lockBolts() {
     retraction = 0.8;
     allBolts();
   }
 
+  // *******************************************************
 
   void allBolts() {  
     float angle = 0;
     for (int i=0; i < boltRadial.length; i++) {
-      boltRadial[i].retractBolt(safeXPos, safeYPos, angle);
-      boltRadial[i].radialBolt(safeXPos, safeYPos, angle);
+      //boltRadial[i].retractBolt(safeXPos, safeYPos, angle);
+      //boltRadial[i].radialBolt(safeXPos, safeYPos, angle);
+      boltRadial[i].radialBolt(safeXPos, safeYPos, angle, retractBolt);
+      boltRadial[i].radialBolt(safeXPos, safeYPos, angle, !retractBolt);
       angle += TWO_PI / boltRadial.length;
     }
   }
-
 
   // *******************************************************
 
@@ -208,9 +208,7 @@ class Portal {
     ellipse(safeXPos, safeYPos, 480, 480);
   }
 
-
   // *******************************************************
-
 
   void portalInPlay() {
     if (startGame) {
@@ -219,8 +217,7 @@ class Portal {
     }
   }
 
-
-
+  // *******************************************************
   // Control position of portal
   void portalPosition() {
     if (winGame) {
@@ -233,7 +230,7 @@ class Portal {
     }
   }
 
-
+  // *******************************************************
 
   void movePortal() {
     safeDoorCogs[6].updateCogColor(brokenCogLight);
@@ -242,6 +239,8 @@ class Portal {
       translate(safeXPos, safeYPos);
     }
   }
+
+  // *******************************************************
 
   void resetPortal() {
     safeDoorCogs[6].updateCogColor(brokenCogLight);
@@ -254,25 +253,9 @@ class Portal {
 
   // *******************************************************
 
-  /**
-   void gameCogs(){
-   brokenCogButton[0]
-   brokenCogButton[1]
-   }
-   
-   
-   void cogBrokenSelect(){
-   updateBrokenCogState();
-   cogRadialOutRing1Detail[0]
-   cogRadialOutRing2Detail[0]
-   }
-   **/
-
-
   void cogButtons() {
     updateCenterCogState(int(safeXPos - centerCogDiaOut/2), int(safeYPos - centerCogDiaOut/2), centerCogDiaOut, centerCogDiaOut);
     if (startGame) {
-      println("cogColor");
       if (centerCogState) {
         safeDoorCogs[6].updateCogColor(colorLightTeal);
         if (mousePressed) {
@@ -285,6 +268,7 @@ class Portal {
     }
   }
 
+  // *******************************************************
 
   void updateCenterCogState(int bX, int bY, int bW, int bH) {
     if (centerCogButton.hoverButton(bX, bY, bW, bH)) {
@@ -293,15 +277,4 @@ class Portal {
       centerCogState = false;
     }
   }
-
-  /**
-   void updateBrokenCogState(int bX, int bY, int bW, int bH){
-   if(brokenCogButton[0].hoverButton(bX, bY, bW, bH)){
-   brokenCogState[0] = true;
-   }
-   else{
-   brokenCogState[0] = false;
-   }
-   }
-   **/
 }

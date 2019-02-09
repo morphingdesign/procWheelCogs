@@ -20,8 +20,8 @@ class Cog {
   int detailOption;  
   
   
-  // *******************************************************
-  // Constructor
+  // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  // Class Constructor
   
   Cog(float speed, int diameterOuter, int diameterInner, int nCogs, float teethProj, color cColor, color bColor, float rOffset, int detailOpt){
     rSpeed = speed;
@@ -36,21 +36,22 @@ class Cog {
   }
 
 
-  // *******************************************************
-  // Cog Class Methods
-  // The following methods each perform separate actions and are sorted in the order of operations
+  // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  // Class Methods
   
   // *******************************************************
   // Cog basic actions  
-  
   void illuminateTimeCog(color lightColor){
     cogColor = lightColor;
   }
+  
+  // *******************************************************
   
   void updateCogColor(color updateColor){
     cogColor = updateColor;
   }
   
+  // *******************************************************
   // Light up cog with a different color 
   void illuminateCenterCog(color lightColor, color baseColor){
     if(int(second()) % 2 == 1){
@@ -62,9 +63,9 @@ class Cog {
     else{
       cogColor = baseColor;
     }
- 
   }
  
+  // *******************************************************
   // Light up cog with a different color 
   void illuminateOrbitCog(color lightColor, color baseColor){
     if(int(second()) % 2 == 1 && openPartSafe){
@@ -83,7 +84,7 @@ class Cog {
   // *******************************************************
   // Cog types based on postions throughout sketch
 
-  
+  // *******************************************************
   // Create cogs located in center of sketch and in a radial pattern
   void radialCog(float x, float y, float radius, float angle){
     centerXPos = x;
@@ -97,6 +98,7 @@ class Cog {
     popMatrix();
   }
   
+  // *******************************************************
   // Create a single cog located in center of sketch
   void centerCog(float x, float y){
     xPos = x;
@@ -105,13 +107,10 @@ class Cog {
     translate(xPos, yPos);
     rotateCog();
     popMatrix();
-  }
-  
+  }  
   
   // *******************************************************
-  // Cog basic actions  
-  
-  // Rotate cog
+  // Cog basic action of rotating
   void rotateCog(){
     float rotateSpeed = 0;
     if(rSpeed != 0){
@@ -121,13 +120,10 @@ class Cog {
     createCog(cogDiameterOuter, cogDiameterInner, numOfTeeth, cogColor, rotationOffset); 
   }
 
-
   // *******************************************************
   // Universal cog creation
-  
   void createCog(int createCogDiameterOuter, int createCogDiameterInner, int createNumOfTeeth, color createCogColor, float rotationOffset){
     noStroke();
-    
     fill(createCogColor);
     pushMatrix();
     
@@ -145,7 +141,6 @@ class Cog {
     fill(bkgdColor);
     ellipse(0, 0, createCogDiameterInner, createCogDiameterInner); 
   
-    
     // Detail Options
     if(detailOption == 1){
       createCogDetail(createCogDiameterOuter, 30, createCogColor);
@@ -155,15 +150,11 @@ class Cog {
     }
     else{
     }
-    
     popMatrix();
   }
 
-
-  // *******************************************************
-  // Cog design detail options
-  
-  // Cog design detail which includes radial arcs
+  // ******************************************************* 
+  // Cog design detail options which include radial arcs
   void createCogDetail(int diameter, int angle, color createCogColor){
     noStroke();
     fill(createCogColor);
@@ -180,8 +171,5 @@ class Cog {
     // Create inner pie fill circle
     fill(createCogColor);
     ellipse(0, 0, diameter / 2, diameter / 2); 
-    
   }
-
-  
 }

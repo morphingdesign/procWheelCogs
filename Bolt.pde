@@ -2,40 +2,65 @@
 class Bolt {
   
   // Class Variables 
-  float safeXPos = width/2;
-  float safeYPos = height/2;
+  //float safeXPos = width/2;
+  //float safeYPos = height/2;
   float centerXPos;
   float centerYPos;
   float boltRadius = 288;
   float boltLength = 110;
   float boltWidth = 40;
-  boolean activate = false;
   
-  // *******************************************************
-  // Constructor
+  // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  // Class Constructor
   
   Bolt(){
   }
 
-  // *******************************************************
+  // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   // Bolt Class Methods
-  // The following methods each perform separate actions and are sorted in the order of operations
 
+  void radialBolt(float x, float y, float angle, boolean retractBolt){
+    centerXPos = x;
+    centerYPos = y;
+    xPos = boltRadius * cos(angle);
+    yPos = boltRadius * sin(angle);
+    pushMatrix();
+    translate(centerXPos + xPos, centerYPos + yPos);  // Positions origin at center of safe door
+    rotate(angle);
+    createBolt(boltLength, boltWidth);
+    if(retractBolt){
+      translate(boltLength * retraction, 0);            // Retraction variable moves bolt in/out
+      createBolt(boltLength * 0.6, boltWidth * 0.8);
+    }
+    else{
+      translate((boltLength / -2) - 2, 0);
+      for(int i=1; i < 4; i++){
+         createBolt(2, boltWidth * (1 - ((2 * i) * 0.1)));
+         translate(-3, 0);
+      }
+    }
+    popMatrix();
+  }  
+  
+  
+  
+/**
   // *******************************************************
-  // Create a ring of rectangles representing bolts with the capacity to retract   
+  // Create a ring of rectangles representing bolts that retract   
   void retractBolt(float x, float y, float angle){
     centerXPos = x;
     centerYPos = y;
     xPos = boltRadius * cos(angle);
     yPos = boltRadius * sin(angle);
     pushMatrix();
-    translate(centerXPos + safeShift + xPos, centerYPos + yPos);
+    translate(centerXPos + xPos, centerYPos + yPos);  // Positions origin at center of safe door
     rotate(angle);
-    translate(boltLength * retraction, 0);
+    translate(boltLength * retraction, 0);            // Retraction variable moves bolt in/out
     createBolt(boltLength * 0.6, boltWidth * 0.8);
     popMatrix();
   }
 
+/**
   // *******************************************************
   // Create a ring of rectangles representing bolts 
   void radialBolt(float x, float y, float angle){
@@ -44,7 +69,7 @@ class Bolt {
     xPos = boltRadius * cos(angle);
     yPos = boltRadius * sin(angle);
     pushMatrix();
-    translate(centerXPos + safeShift + xPos, centerYPos + yPos);
+    translate(centerXPos + xPos, centerYPos + yPos);  // Positions origin at center of safe door
     rotate(angle);
     createBolt(boltLength, boltWidth);
     translate((boltLength / -2) - 2, 0);
@@ -54,13 +79,14 @@ class Bolt {
     }
     popMatrix();
   }
+**/
    
   // *******************************************************
-  // Create individual bolts with a retracting inner bolt
+  // Create shape and gradient for an individual bolt
   void createBolt(float createBoltLength, float createBoltWidth){
     
     // Create solid white background rectangle behind the gradient
-    // to hide any gaps between lines in the following array
+    // to hide any gaps between lines in the following gradient array
     noStroke();
     fill(255);
     rectMode(CENTER);
