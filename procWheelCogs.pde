@@ -30,7 +30,8 @@ float speed = 1;
 float reverseSpeed = speed * -1;
 
 // Colors
-color colorWhite = color(255, 255, 255);
+color colorWhite = color(255);
+color colorBlack = color(0);
 color colorDarkTeal = color(0, 147, 170);
 color colorLightTeal = color(51, 182, 203);
 color colorDarkBrown = color(102, 69, 6);
@@ -39,8 +40,8 @@ color colorLightTan = color(255, 211, 129);
 color colorDarkTan = color(129, 84, 0);
 color colorOrange = color(255, 167, 0);
 color colorGradient = color(195, 135, 20);
-color colorButtonHighlight = color(255);
-color colorButtonSelected = color(0);
+color colorButtonLight = color(175);
+color colorButtonDark = color(120);          
 
 // Interactivity toggles
 boolean startGame = false;
@@ -51,6 +52,7 @@ boolean resetGame = false;
 boolean lockSafe = true;
 boolean openPartSafe = false;
 boolean openFullSafe = false;
+boolean cogSelected = false;
 float retraction;
 
 // *******************************************************
@@ -82,8 +84,7 @@ void draw() {
   
   // Game actions
   
-  clockLockGame.showIntroScreen();
-  //clockLockGame.showResetScreen();
+  clockLockGame.showGameScreen();
   safeDoor.portalInPlay();
   
   

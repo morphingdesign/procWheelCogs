@@ -10,12 +10,12 @@ class GameAsset {
   int roundCorner = 5;
   int margin = 10;
   int alpha = 200;
-  color colorStartButton = color(255, alpha);
+  color colorStartButton = color(colorDarkTeal, alpha);
   boolean hoverStartButton = false;
   boolean introScreen = false;
   boolean resetScreen = false;
   String startTitle = "CLOCK LOCK";
-  String startGuide = "The safe has become partially unlocked with a malfunction. Click on the broken red cogs to open the safe.";
+  String startGuide = "The safe has partially unlocked with a malfunction. Click START and the highlighted broken center cog to open the safe.";
   String resetGuide = "Click the reset button to play again.";
   
   // *******************************************************
@@ -114,24 +114,17 @@ class GameAsset {
     }
     else{
       //showResetScreen();
-      showIntroScreen();
+      showGameScreen();
     }
   }
 
 
-  void showIntroScreen(){
+  void showGameScreen(){
     if(!startGame && !resetScreen){
       splashScreenContent(startTitle, startGuide);
       startButton("START");
     }
     else if(startGame && resetScreen){
-      splashScreenContent(startTitle, resetGuide);
-      startButton("RESET");
-    }
-  }
-  
-  void showResetScreen(){
-    if(startGame && resetScreen){
       splashScreenContent(startTitle, resetGuide);
       startButton("RESET");
     }
@@ -143,9 +136,9 @@ class GameAsset {
   void splashScreenContent(String splashTitle, String splashText){
 
     noStroke();
-    
+    stroke(colorOrange);
     pushMatrix();
-    fill(colorWhite, alpha);
+    fill(colorDarkTeal, alpha);
     rectMode(CENTER);
     translate(titleBoxX, titleBoxY);
     rect(0, 0, titleBoxW, titleBoxH, roundCorner);
@@ -157,11 +150,11 @@ class GameAsset {
     popMatrix();
     
     pushMatrix();
-    fill(colorWhite, alpha);
+    fill(colorDarkTeal, alpha);
     translate(titleBoxX, titleBoxY + titleBoxH / 2 + margin + guideBoxH / 2);
     rect(0, 0, titleBoxW, guideBoxH, roundCorner);
     
-    fill(0);
+    fill(255);
     textSize(14);
     textAlign(LEFT);
     text(splashText, margin / 2, margin / 2, titleBoxW - margin, guideBoxH); 
@@ -176,12 +169,14 @@ class GameAsset {
     
     pushMatrix();
     if(hoverStartButton){
-      fill(colorButtonSelected);
+      stroke(colorOrange);
+      fill(colorDarkTeal);
     }
     else{
+      noStroke();
+      stroke(colorOrange);
       fill(colorStartButton);
     }
-    noStroke();
     rectMode(CORNER);
     translate(startButtonX, startButtonY);
     rect(0, 0, startButtonW, titleBoxH, roundCorner);
@@ -196,7 +191,7 @@ class GameAsset {
 
 
   void updateStartButton(int bX, int bY, int bW, int bH){
-    if(hoverRectButton(bX, bY, bW, bH)){
+    if(hoverButton(bX, bY, bW, bH)){
       hoverStartButton = true;
     }
     else{
@@ -206,7 +201,7 @@ class GameAsset {
 
 
 
-  boolean hoverRectButton(int x, int y, int w, int h){
+  boolean hoverButton(int x, int y, int w, int h){
     if(mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h){
       return true;
     }

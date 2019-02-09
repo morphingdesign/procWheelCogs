@@ -50,25 +50,27 @@ class Cog {
   void updateCogColor(color updateColor){
     cogColor = updateColor;
   }
-
   
-     
-  void selectLightCog(){
-    if(mousePressed) {
-      openFullSafe = true;
-      //cogColor = color(255, 120, 134);
-    }  
+  // Light up cog with a different color 
+  void illuminateCenterCog(color lightColor, color baseColor){
+    if(int(second()) % 2 == 1){
+      cogColor = lightColor;
+    }
+    else if(cogSelected){
+      bkgdColor = lightColor;
+    }
+    else{
+      cogColor = baseColor;
+    }
+ 
   }
-  
-  
-  
  
   // Light up cog with a different color 
-  void illuminateLockCog(color lightColor, color baseColor){
+  void illuminateOrbitCog(color lightColor, color baseColor){
     if(int(second()) % 2 == 1 && openPartSafe){
       cogColor = lightColor;
     }
-    else if(openFullSafe){
+    else if(cogSelected){
       bkgdColor = lightColor;
     }
     else{
