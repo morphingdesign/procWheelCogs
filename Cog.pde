@@ -79,11 +79,8 @@ class Cog {
  
   }
 
-
   // *******************************************************
-  // Cog types based on postions throughout sketch
-
-
+  // Create cogs based on radial postions in sketch and rotation criteria
   void rotateCog(float x, float y, float radius, float angle){
     centerXPos = x;
     centerYPos = y;
@@ -94,34 +91,6 @@ class Cog {
     createCog();
     popMatrix(); 
   }
-
-/**
-  // *******************************************************
-  // Create cogs located in center of sketch and in a radial pattern
-  void radialCog(float x, float y, float radius, float angle){
-    centerXPos = x;
-    centerYPos = y;
-    xPos = radius * cos(angle);
-    yPos = radius * sin(angle);
-    pushMatrix();
-    translate(centerXPos + xPos, centerYPos + yPos);
-    createCog();
-    popMatrix();
-  }
-  
-  // *******************************************************
-  // Create a single rotating cog located in center of sketch
-  void centerCog(float x, float y){
-    xPos = x;
-    yPos = y;
-    pushMatrix();
-    translate(xPos, yPos);
-    createCog();
-    popMatrix();
-  }  
-**/  
-  
-  
   
   // *******************************************************
   // Basic cog creation

@@ -84,25 +84,25 @@ class Portal {
   void create() {
 
     // Create background for safe door
-    safeDoorBack();
+    noStroke();
+    fill(colorLightTeal);
+    ellipse(safeXPos, safeYPos, 719, 719); 
+    fill(colorDarkBrown);
+    ellipse(safeXPos, safeYPos, 480, 480);
 
     // Create central cogs
-    // Sorted in array order from background to foreground
-    for (int i=0; i < safeDoorCogs.length; i++) {
-      //safeDoorCogs[i].centerCog(safeXPos, safeYPos);
+    for (int i=0; i < safeDoorCogs.length; i++) {            // For loops sorts array order from background to foreground
       safeDoorCogs[i].rotateCog(safeXPos, safeYPos, 0, 0);
     }
-
 
     // Create ring of cogs for time: Seconds
     float angle = radians(270);
     float radius = 45; 
     for (int i=0; i < cogRadialSec.length; i++) {
-      //cogRadialSec[i].radialCog(safeXPos, safeYPos, radius, angle);
       cogRadialSec[i].rotateCog(safeXPos, safeYPos, radius, angle);
       angle += TWO_PI / cogRadialSec.length;
       int s = second();
-      if (i == s/5) {
+      if (i == s/5) {                                        // Cog color changes when it syncs with sec
         cogRadialSec[i].illuminateTimeCog(colorLightTeal);
       } else {
         cogRadialSec[i].illuminateTimeCog(colorOrange);
@@ -112,11 +112,10 @@ class Portal {
     // Create ring of cogs for time: Minutes
     radius = 85;
     for (int i=0; i < cogRadialMin.length; i++) {
-      //cogRadialMin[i].radialCog(safeXPos, safeYPos, radius, angle);
       cogRadialMin[i].rotateCog(safeXPos, safeYPos, radius, angle);
       angle += TWO_PI / cogRadialMin.length;
       int m = minute();
-      if (i == m/5) {
+      if (i == m/5) {                                        // Cog color changes when it syncs with min
         cogRadialMin[i].illuminateTimeCog(colorLightTeal);
       } else {
         cogRadialMin[i].illuminateTimeCog(colorOrange);
@@ -126,14 +125,13 @@ class Portal {
     // Create ring of cogs for time: Hours
     radius = 140;
     for (int i=0; i < cogRadialHr.length; i++) {
-      //cogRadialHr[i].radialCog(safeXPos, safeYPos, radius, angle);
       cogRadialHr[i].rotateCog(safeXPos, safeYPos, radius, angle);
       angle += TWO_PI / cogRadialHr.length;
       int h = hour();
       if (h > 12) {
         h -= 12;
       }
-      if (i == h) {
+      if (i == h) {                                        // Cog color changes when it syncs with hr
         cogRadialHr[i].illuminateTimeCog(colorLightTeal);
       } else {
         cogRadialHr[i].illuminateTimeCog(colorOrange);
@@ -143,16 +141,12 @@ class Portal {
     // Create outer rings
     angle = 0;
     for (int i=0; i < cogRadialOutRing1.length; i++) {
-      //cogRadialOutRing1[i].radialCog(safeXPos, safeYPos, 195, angle);
-      //cogRadialOutRing1Detail[i].radialCog(safeXPos, safeYPos, 195, angle);
       cogRadialOutRing1[i].rotateCog(safeXPos, safeYPos, 195, angle);
       cogRadialOutRing1Detail[i].rotateCog(safeXPos, safeYPos, 195, angle);
       angle += TWO_PI / cogRadialOutRing1.length;
     }
     angle = 25;
     for (int i=0; i < cogRadialOutRing2.length; i++) {
-      //cogRadialOutRing2[i].radialCog(safeXPos, safeYPos, 220, angle);
-      //cogRadialOutRing2Detail[i].radialCog(safeXPos, safeYPos, 220, angle);
       cogRadialOutRing2[i].rotateCog(safeXPos, safeYPos, 220, angle);
       cogRadialOutRing2Detail[i].rotateCog(safeXPos, safeYPos, 220, angle);
       angle += TWO_PI / cogRadialOutRing2.length;
@@ -181,17 +175,19 @@ class Portal {
         allBolts();
       }
     } else {
-      lockBolts();
+      //lockBolts();
+      retraction = 0.8;
+      allBolts();
     }
   }
 
   // *******************************************************
-
+/**
   void lockBolts() {
     retraction = 0.8;
     allBolts();
   }
-
+**/
   // *******************************************************
 
   void allBolts() {  
@@ -201,16 +197,6 @@ class Portal {
       boltRadial[i].radialBolt(safeXPos, safeYPos, angle, !retractBolt);
       angle += TWO_PI / boltRadial.length;
     }
-  }
-
-  // *******************************************************
-
-  void safeDoorBack() {
-    noStroke();
-    fill(colorLightTeal);
-    ellipse(safeXPos, safeYPos, 719, 719); 
-    fill(colorDarkBrown);
-    ellipse(safeXPos, safeYPos, 480, 480);
   }
 
   // *******************************************************
@@ -252,7 +238,8 @@ class Portal {
     for (int i=0; i < safeDoorCogs.length; i++) {
       safeXPos = width/2; 
       translate(safeXPos, safeYPos);
-      lockBolts();
+      //lockBolts();
+      //activateBolts();
     }
   }
 
