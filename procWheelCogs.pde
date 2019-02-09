@@ -1,26 +1,25 @@
 // Clock Lock Sketch/Program
 // by Hans Palacios
 // for SCAD ITGM 719 Course
-// *******************************************************
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-/** 
-
-
-INCLUDE PROJECT DESCRIPTION
-
-The safe's bolts have become partially unlocked with the system malfunctioning.
-Click on the highlighted broken cogs to allow the system to fully open the safe.
-Winning will open the safe door revealing the safe's contents.
-
+/** This interactive sketch is composed of a dynamic set of shapes representing 
+    cogs and bolts with a safe door.  The center of the safe door is a series of 
+    cogs depicting the hour, minute, and second, with each one updating live.  Upon
+    clicking the start button in the guide user interface, the safe's bolts become 
+    partially unlocked to represent a system malfunction in the safe door operation.
+    Clicking on the highlighted broken cog in the center allows the system to fully
+    open the safe and revealing the safe's contents.
 **/
 
-
-// *******************************************************
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 // Global variables
-Scene mainScene;
-Portal safeDoor;
-GameAsset clockLockGame;
 
+Scene mainScene;                         // Static graphics
+Portal safeDoor;                         // Dynamics safe door graphics
+GameAsset clockLockGame;                 // Game interactivity
+
+//
 float safeXPos = width/2;
 float safeYPos = height/2;
 float safeShift = 0;
@@ -43,7 +42,7 @@ color colorGradient = color(195, 135, 20);
 color colorButtonLight = color(175);
 color colorButtonDark = color(120);          
 
-// Interactivity toggles
+// Game toggles
 boolean startGame = false;
 boolean gameInPlay = false;
 boolean winGame = false;
@@ -53,41 +52,41 @@ boolean lockSafe = true;
 boolean openPartSafe = false;
 boolean openFullSafe = false;
 boolean cogSelected = false;
-float retraction;
+float retraction;                        // Defines the state of bolt retraction for opening safe
 
-// *******************************************************
+// Game Content
+PImage[] safeContent = new PImage[2];    // Array of images can increase to add additional images
+int safeImageCounter = 0;                // Keeps track of the index for the safe content images
+
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 void setup() {
   size(1000, 1000);
 
-  clockLockGame = new GameAsset();
-  mainScene = new Scene();
-  safeDoor = new Portal();
-  
-  
+  clockLockGame = new GameAsset();                 // Initiates a new game with internal game logic
+  mainScene = new Scene();                         // Initiates a new object for all static graphics
+  safeContent[0] = loadImage("safeContent1.png");  // Images saved in the accompanying 'data' folder
+  safeContent[1] = loadImage("safeContent2.png");  
+  safeDoor = new Portal();                         // Safe door that moves and drawn above the safe content
 }
 
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 void draw() {
   background(colorDarkTeal);
   
-  clockLockGame.gameState();
-  clockLockGame.activateGame();  // Initiate game
-  clockLockGame.resetGame();
-  
+  // Game logic
+  clockLockGame.gameState();       // Store and track game state as draw() is called
+  clockLockGame.activateGame();    // Initiate game with UI guide and begin interactivity
+  clockLockGame.resetGame();       // Reset game state back to start for a new game
   
   // Create scene elements
-  mainScene.createBkgdCogs();    // Rotating cogs in background
-  mainScene.createSafeFrame();   // Static frame of the safe
-  mainScene.createSafeContent();
-  safeDoor.create();             // Door to the safe
+  mainScene.createBkgdCogs();      // Rotating cogs in background
+  mainScene.createSafeFrame();     // Static background frame of the safe
+  mainScene.createSafeContent();   // Static image depicting inner contents of safe
+  safeDoor.create();               // Door to the safe
   
   // Game actions
-  
-  clockLockGame.showGameScreen();
-  safeDoor.portalInPlay();
-  
-  
-  //safeDoor.movePortal();
-    
+  clockLockGame.showGameScreen();  // Displays the UI with guide and start/reset buttons
+  safeDoor.portalInPlay();         // Initiates the safe door dynamics when game starts
 }

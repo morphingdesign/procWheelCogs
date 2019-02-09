@@ -16,7 +16,7 @@ class GameAsset {
   boolean resetScreen = false;
   String startTitle = "CLOCK LOCK";
   String startGuide = "The safe has partially unlocked with a malfunction. Click START and the highlighted broken center cog to open the safe.";
-  String resetGuide = "Click the reset button to play again.";
+  String resetGuide = "Click the reset button to play again and reveal other contents in the safe.";
   
   // *******************************************************
   // Constructor
@@ -81,6 +81,7 @@ class GameAsset {
     hoverStartButton = false;
     introScreen = false;
     resetScreen = false;
+    safeImageCounter ++;
     //safeXPos = width/2;
     //safeYPos = height/2;
     println("resetGame:" + resetGame);
@@ -169,7 +170,7 @@ class GameAsset {
     
     pushMatrix();
     if(hoverStartButton){
-      stroke(colorOrange);
+      stroke(colorBlack);
       fill(colorDarkTeal);
     }
     else{
