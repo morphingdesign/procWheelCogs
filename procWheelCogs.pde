@@ -1,15 +1,31 @@
-// Clock Lock Sketch/Program
+// CLOCK LOCK SKETCH/PROGRAM
 // by Hans Palacios
 // for SCAD ITGM 719 Course
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-/** This interactive sketch is composed of a dynamic set of shapes representing 
+/** PROJECT DESCRIPTION
+    This interactive sketch is composed of a dynamic set of shapes representing 
     cogs and bolts with a safe door.  The center of the safe door is a series of 
     cogs depicting the hour, minute, and second, with each one updating live.  Upon
     clicking the start button in the guide user interface, the safe's bolts become 
     partially unlocked to represent a system malfunction in the safe door operation.
     Clicking on the highlighted broken cog in the center allows the system to fully
     open the safe and revealing the safe's contents.
+    --------------------------------------------------------------------------------
+    REFERENCED CODE
+    Code referenced from online sources are identified with comments and delineated
+    with the following syntax:
+    
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+        Referenced code located here along with cited web link.
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+        
+    Currently, the only referenced code is located within the Bolt() class.    
+    --------------------------------------------------------------------------------    
+    IMAGES
+    The PNG images used for the safe content within this program and located in the
+    accompanying 'data' folder were created by Hans Palacios.  Each were modeled, 
+    textured, and rendered in SideFX Houdini.
 **/
 
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

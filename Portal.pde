@@ -12,7 +12,6 @@ class Portal {
   Cog[] cogRadialOutRing2Detail = new Cog[24];  // Outer ring 2 inner detail option
   Bolt[] boltRadial = new Bolt[24]; // Ring of retractable bolts
 
-
   // Class Variables 
   float safeXPos = width/2;
   float safeYPos = height/2;
@@ -21,7 +20,7 @@ class Portal {
   int centerCogDiaOut = 68;
   GameAsset centerCogButton;
   boolean centerCogState = false;
-  boolean retractBolt = true;
+  boolean retractBolt = true;            // Sets option for static or retracting bolts
   color brokenCogLight = colorLightTan;
   color brokenCogDark = colorWhite;
 
@@ -90,7 +89,8 @@ class Portal {
     // Create central cogs
     // Sorted in array order from background to foreground
     for (int i=0; i < safeDoorCogs.length; i++) {
-      safeDoorCogs[i].centerCog(safeXPos, safeYPos);
+      //safeDoorCogs[i].centerCog(safeXPos, safeYPos);
+      safeDoorCogs[i].rotateCog(safeXPos, safeYPos, 0, 0);
     }
 
 
@@ -98,7 +98,8 @@ class Portal {
     float angle = radians(270);
     float radius = 45; 
     for (int i=0; i < cogRadialSec.length; i++) {
-      cogRadialSec[i].radialCog(safeXPos, safeYPos, radius, angle);
+      //cogRadialSec[i].radialCog(safeXPos, safeYPos, radius, angle);
+      cogRadialSec[i].rotateCog(safeXPos, safeYPos, radius, angle);
       angle += TWO_PI / cogRadialSec.length;
       int s = second();
       if (i == s/5) {
@@ -111,7 +112,8 @@ class Portal {
     // Create ring of cogs for time: Minutes
     radius = 85;
     for (int i=0; i < cogRadialMin.length; i++) {
-      cogRadialMin[i].radialCog(safeXPos, safeYPos, radius, angle);
+      //cogRadialMin[i].radialCog(safeXPos, safeYPos, radius, angle);
+      cogRadialMin[i].rotateCog(safeXPos, safeYPos, radius, angle);
       angle += TWO_PI / cogRadialMin.length;
       int m = minute();
       if (i == m/5) {
@@ -124,7 +126,8 @@ class Portal {
     // Create ring of cogs for time: Hours
     radius = 140;
     for (int i=0; i < cogRadialHr.length; i++) {
-      cogRadialHr[i].radialCog(safeXPos, safeYPos, radius, angle);
+      //cogRadialHr[i].radialCog(safeXPos, safeYPos, radius, angle);
+      cogRadialHr[i].rotateCog(safeXPos, safeYPos, radius, angle);
       angle += TWO_PI / cogRadialHr.length;
       int h = hour();
       if (h > 12) {
@@ -140,14 +143,18 @@ class Portal {
     // Create outer rings
     angle = 0;
     for (int i=0; i < cogRadialOutRing1.length; i++) {
-      cogRadialOutRing1[i].radialCog(safeXPos, safeYPos, 195, angle);
-      cogRadialOutRing1Detail[i].radialCog(safeXPos, safeYPos, 195, angle);
+      //cogRadialOutRing1[i].radialCog(safeXPos, safeYPos, 195, angle);
+      //cogRadialOutRing1Detail[i].radialCog(safeXPos, safeYPos, 195, angle);
+      cogRadialOutRing1[i].rotateCog(safeXPos, safeYPos, 195, angle);
+      cogRadialOutRing1Detail[i].rotateCog(safeXPos, safeYPos, 195, angle);
       angle += TWO_PI / cogRadialOutRing1.length;
     }
     angle = 25;
     for (int i=0; i < cogRadialOutRing2.length; i++) {
-      cogRadialOutRing2[i].radialCog(safeXPos, safeYPos, 220, angle);
-      cogRadialOutRing2Detail[i].radialCog(safeXPos, safeYPos, 220, angle);
+      //cogRadialOutRing2[i].radialCog(safeXPos, safeYPos, 220, angle);
+      //cogRadialOutRing2Detail[i].radialCog(safeXPos, safeYPos, 220, angle);
+      cogRadialOutRing2[i].rotateCog(safeXPos, safeYPos, 220, angle);
+      cogRadialOutRing2Detail[i].rotateCog(safeXPos, safeYPos, 220, angle);
       angle += TWO_PI / cogRadialOutRing2.length;
     }
 
@@ -190,8 +197,6 @@ class Portal {
   void allBolts() {  
     float angle = 0;
     for (int i=0; i < boltRadial.length; i++) {
-      //boltRadial[i].retractBolt(safeXPos, safeYPos, angle);
-      //boltRadial[i].radialBolt(safeXPos, safeYPos, angle);
       boltRadial[i].radialBolt(safeXPos, safeYPos, angle, retractBolt);
       boltRadial[i].radialBolt(safeXPos, safeYPos, angle, !retractBolt);
       angle += TWO_PI / boltRadial.length;

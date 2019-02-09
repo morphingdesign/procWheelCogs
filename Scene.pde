@@ -45,8 +45,8 @@ class Scene {
       for(float j = (cogBkgdDiameterOuter * cos(radians(50))); j < height + (cogBkgdDiameterOuter * cos(radians(30))); j += (cogBkgdDiameterOuter * cos(radians(50))) * 2){
         pushMatrix();
         translate(i, j);        
-        cogBkgd[0].rotateCog();  // Large outer cog
-        cogBkgd[1].rotateCog();  // Small inner cog with detail
+        cogBkgd[0].createCog();  // Large outer cog
+        cogBkgd[1].createCog();  // Small inner cog with detail
         popMatrix();
       }
     } 
@@ -54,8 +54,8 @@ class Scene {
       for(float j = 0; j < height + (cogBkgdDiameterOuter * cos(radians(30))); j += (cogBkgdDiameterOuter * cos(radians(50))) * 2){
         pushMatrix();
         translate(i, j);
-        cogBkgd[2].rotateCog();  // Large outer cog
-        cogBkgd[3].rotateCog();  // Small inner cog with detail
+        cogBkgd[2].createCog();  // Large outer cog
+        cogBkgd[3].createCog();  // Small inner cog with detail
         popMatrix();
       }
     }
@@ -63,12 +63,12 @@ class Scene {
 
   // *******************************************************
   // Create safe frame
-  /** Create the frame for the safe using a series of cogs located in the center of the sketch and serving
-      as a background for the safe contents and safe door.
+  /** Create the frame for the safe using a series of static cogs located in the center of the sketch and 
+      serving as a background for the safe contents and safe door.
   **/
   void createSafeFrame(){
     for(int i=0; i < safeFrame.length; i++){
-       safeFrame[i].centerCog(width/2, height/2);
+       safeFrame[i].rotateCog(width/2, height/2, 0, 0);
     }
   }
 

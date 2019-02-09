@@ -19,7 +19,6 @@ class Cog {
   float cogOffset = cogDiameterOuter * cos(radians(45));
   int detailOption;  
   
-  
   // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   // Class Constructor
   
@@ -84,6 +83,19 @@ class Cog {
   // *******************************************************
   // Cog types based on postions throughout sketch
 
+
+  void rotateCog(float x, float y, float radius, float angle){
+    centerXPos = x;
+    centerYPos = y;
+    xPos = radius * cos(angle);
+    yPos = radius * sin(angle);
+    pushMatrix();
+    translate(centerXPos + xPos, centerYPos + yPos);
+    createCog();
+    popMatrix(); 
+  }
+
+/**
   // *******************************************************
   // Create cogs located in center of sketch and in a radial pattern
   void radialCog(float x, float y, float radius, float angle){
@@ -92,84 +104,72 @@ class Cog {
     xPos = radius * cos(angle);
     yPos = radius * sin(angle);
     pushMatrix();
-    //translate(width/2 + xPos, height/2 + yPos);
     translate(centerXPos + xPos, centerYPos + yPos);
-    rotateCog();
+    createCog();
     popMatrix();
   }
   
   // *******************************************************
-  // Create a single cog located in center of sketch
+  // Create a single rotating cog located in center of sketch
   void centerCog(float x, float y){
     xPos = x;
     yPos = y;
     pushMatrix();
     translate(xPos, yPos);
-    rotateCog();
+    createCog();
     popMatrix();
   }  
+**/  
+  
+  
   
   // *******************************************************
-  // Cog basic action of rotating
-  void rotateCog(){
+  // Basic cog creation
+  /** This function is a significant building block for use in creating a wide variety
+      of static or rotating cogs based on size, teeth, color, and any applicable detail option.
+  **/  
+  void createCog(){
     float rotateSpeed = 0;
-    if(rSpeed != 0){
+    if(rSpeed != 0){                                              
       rotateSpeed = (TWO_PI / QUARTER_PI * (second() * (rSpeed)));
     }      
-    rotate(radians(rotateSpeed));
-    createCog(cogDiameterOuter, cogDiameterInner, numOfTeeth, cogColor, rotationOffset); 
-  }
-
-  // *******************************************************
-  // Universal cog creation
-  void createCog(int createCogDiameterOuter, int createCogDiameterInner, int createNumOfTeeth, color createCogColor, float rotationOffset){
+    rotate(radians(rotateSpeed));                                     // Dynamic rotation initiated, if applicable
     noStroke();
-    fill(createCogColor);
+    fill(cogColor);
     pushMatrix();
-    
-    // Create cog projections
-    rectMode(CENTER);
-    for(int i = 0; i < (createNumOfTeeth / 2); i++){
-      rotate((TWO_PI + rotationOffset) / createNumOfTeeth);
-      //rect(0, 0, createCogDiameterOuter / 10, createCogDiameterOuter + 2 * cogTeethProject);  
-      rect(0, 0, (createCogDiameterOuter / 2) * (TWO_PI / (createNumOfTeeth * 2)), createCogDiameterOuter + 2 * cogTeethProject);  
+    rectMode(CENTER);                                                 // Create cog teeth
+    for(int i = 0; i < (numOfTeeth / 2); i++){
+      rotate((TWO_PI + rotationOffset) / numOfTeeth);
+      rect(0, 0, (cogDiameterOuter / 2) * (TWO_PI / (numOfTeeth * 2)), cogDiameterOuter + 2 * cogTeethProject);  
     }
-     
-    // Create center detail circles of wheel
-    ellipseMode(CENTER);
-    ellipse(0, 0, createCogDiameterOuter, createCogDiameterOuter); // Create central wheel
+    ellipseMode(CENTER);                                              // Create center detail circles of wheel
+    ellipse(0, 0, cogDiameterOuter, cogDiameterOuter);    
     fill(bkgdColor);
-    ellipse(0, 0, createCogDiameterInner, createCogDiameterInner); 
-  
-    // Detail Options
-    if(detailOption == 1){
-      createCogDetail(createCogDiameterOuter, 30, createCogColor);
+    ellipse(0, 0, cogDiameterInner, cogDiameterInner);    
+    if(detailOption == 1){                                            // Specify which of the 2 detail options is applied, if any
+      createCogDetail(cogDiameterOuter, 30, cogColor);
     }
     else if(detailOption == 2){
-      createCogDetail(createCogDiameterOuter, 15, createCogColor);
+      createCogDetail(cogDiameterOuter, 15, cogColor);
     }
     else{
     }
     popMatrix();
   }
-
+  
   // ******************************************************* 
-  // Cog design detail options which include radial arcs
+  // Create cog design detail options of radial arcs
   void createCogDetail(int diameter, int angle, color createCogColor){
     noStroke();
     fill(createCogColor);
-    rotate(radians((angle / 2)));  // Rotate pie to align to axis
+    rotate(radians((angle / 2)));                                                  // Rotate pie to align to axis
     diameter = int(diameter * 0.8);
-    
-    // Create pie slices
     for(int i = 360; i >= 0; i = i - (2 * angle)){
       int firstAngle = i - angle;
       int secondAngle = i;
-      arc(0, 0, diameter, diameter, radians(firstAngle), radians(secondAngle));
+      arc(0, 0, diameter, diameter, radians(firstAngle), radians(secondAngle));    // Create pie slices
     }
-    
-    // Create inner pie fill circle
     fill(createCogColor);
-    ellipse(0, 0, diameter / 2, diameter / 2); 
+    ellipse(0, 0, diameter / 2, diameter / 2);                                     // Create inner pie fill circle
   }
 }
