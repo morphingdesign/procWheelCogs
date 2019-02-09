@@ -6,9 +6,9 @@ class Scene {
   Cog[] safeFrame = new Cog[3];    // Cogs aligned to the center of the sketch used to create the safe
   
   // Class Variables 
-  int cogBkgdDiameterOuter = 100;  // Use for consistent shape of the background cogs
+  int cogBkgdDiameterOuter = 100;  // Used for consistent size of the background cogs
   int cogBkgdDiameterInner = 75;       
-  int numOfTeeth = 18; 
+  int numOfTeeth = 18;             // Used for consistent number of teeth in the background cogs
   
   // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   // Class Constructor

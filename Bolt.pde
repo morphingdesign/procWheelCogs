@@ -2,10 +2,8 @@
 class Bolt {
   
   // Class Variables 
-  //float centerXPos;
-  //float centerYPos;
-  float boltRadius = 288;
-  float boltLength = 110;
+  float boltRadius = 288;    // Since all bolts are the same size, the dimensions are defined
+  float boltLength = 110;    // here locally within the class
   float boltWidth = 40;
   
   // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -18,7 +16,7 @@ class Bolt {
   // Bolt Class Methods
 
   // *******************************************************
-  // Create an individual bolt composed of rectangles that are either static or retract   
+  // Construct an individual bolt composed of rectangles that are either static or retract   
   void radialBolt(float x, float y, float angle, boolean retractBolt){
     float centerXPos = x;
     float centerYPos = y;
