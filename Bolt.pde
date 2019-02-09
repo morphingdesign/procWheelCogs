@@ -2,8 +2,8 @@
 class Bolt {
   
   // Class Variables 
-  float centerXPos;
-  float centerYPos;
+  //float centerXPos;
+  //float centerYPos;
   float boltRadius = 288;
   float boltLength = 110;
   float boltWidth = 40;
@@ -20,10 +20,10 @@ class Bolt {
   // *******************************************************
   // Create an individual bolt composed of rectangles that are either static or retract   
   void radialBolt(float x, float y, float angle, boolean retractBolt){
-    centerXPos = x;
-    centerYPos = y;
-    xPos = boltRadius * cos(angle);
-    yPos = boltRadius * sin(angle);
+    float centerXPos = x;
+    float centerYPos = y;
+    float xPos = boltRadius * cos(angle);
+    float yPos = boltRadius * sin(angle);
     pushMatrix();
     translate(centerXPos + xPos, centerYPos + yPos);        // Defines new origin
     rotate(angle);

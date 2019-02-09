@@ -2,12 +2,12 @@
 class Cog {
   
   // Class Variables
-  float safeXPos = width/2;
-  float safeYPos = height/2;
-  float xPos;
-  float yPos;
-  float centerXPos;
-  float centerYPos;
+  //float safeXPos = width/2;
+  //float safeYPos = height/2;
+  //float xPos;
+  //float yPos;
+  //float centerXPos;
+  //float centerYPos;
   float rSpeed;
   int cogDiameterOuter;
   int cogDiameterInner;
@@ -80,12 +80,12 @@ class Cog {
   }
 
   // *******************************************************
-  // Create cogs based on radial postions in sketch and rotation criteria
+  // Create cog based on unique origin and polar coordinates in sketch and rotation criteria
   void rotateCog(float x, float y, float radius, float angle){
-    centerXPos = x;
-    centerYPos = y;
-    xPos = radius * cos(angle);
-    yPos = radius * sin(angle);
+    float centerXPos = x;
+    float centerYPos = y;
+    float xPos = radius * cos(angle);
+    float yPos = radius * sin(angle);
     pushMatrix();
     translate(centerXPos + xPos, centerYPos + yPos);
     createCog();

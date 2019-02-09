@@ -69,11 +69,6 @@ class Portal {
     // Create button for center cog
     centerCogButton = new GameAsset();
 
-    /**
-     for(int i=0; i < brokenCogState.length; i++){
-     brokenCogState[i] = false;
-     }
-     **/
   }
 
   // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -82,7 +77,7 @@ class Portal {
   // *******************************************************
   // Create safe door portal geometry
   void create() {
-
+    
     // Create background for safe door
     noStroke();
     fill(colorLightTeal);
@@ -159,7 +154,6 @@ class Portal {
     cogRadialOutRing2[randCog2].illuminateOrbitCog(colorLightTeal, colorOrange);
 
     // Create radial pattern of bolts  
-    //activateBolts();
     if (openPartSafe) {
       if (openFullSafe) {
         retraction = 0.3;
@@ -173,25 +167,6 @@ class Portal {
       allBolts();
     }
   }
-
-/**
-  // *******************************************************
-  // Bolt basic actions  
-  void activateBolts() {
-    if (openPartSafe) {
-      if (openFullSafe) {
-        retraction = 0.3;
-        allBolts();
-      } else {
-        retraction = 0.6;
-        allBolts();
-      }
-    } else {
-      retraction = 0.8;
-      allBolts();
-    }
-  }
-**/
 
   // *******************************************************
 
