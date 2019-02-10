@@ -2,14 +2,14 @@
 class GameAsset {
   
   // Class Variables
-  int titleBoxX = 140;
+  int titleBoxX = 140;      // Position of title box used for user guide
   int titleBoxY = 40;
-  int titleBoxW = 240;
+  int titleBoxW = 240;      // Size of box used for user guide
   int titleBoxH = 40;
   int guideBoxH = 100;
-  int roundCorner = 5;
-  int margin = 10;
-  int alpha = 220;
+  int roundCorner = 5;      // Int used to define rectangles' rounded corners
+  int margin = 10;          // Used to separate text boxes
+  int alpha = 220;          // Add a bit of transparency to text box rectangles
   color colorStartButton = color(colorDarkTeal, alpha);
   boolean hoverStartButton = false;
   String startTitle = "CLOCK LOCK";
@@ -33,12 +33,7 @@ class GameAsset {
       if(winGame){
         openFullSafe = true;
         if(resetGame){
-           resetState();        // Resets conditions so that game can start as new after win has been achieved
-        }
-      }
-      else{
-        if(resetGame){
-          resetState();
+          resetState();       // Resets conditions so that game can start as new after win has been achieved
         }
       }
     }
