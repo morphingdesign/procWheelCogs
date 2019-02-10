@@ -75,7 +75,7 @@ boolean cogSelected = false;
 
 // Game Content
 float retraction;                        // Defines the state of bolt retraction for opening safe
-PImage[] safeContent = new PImage[2];    // Array of images can increase to add additional images
+PImage[] safeContent = new PImage[4];    // Array of images can increase to add additional images
 int safeImageCounter = 0;                // Keeps track of the index for the safe content images
 
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -86,7 +86,9 @@ void setup() {
   clockLockGame = new GameAsset();                 // Initiates a new game with internal game logic
   mainScene = new Scene();                         // Initiates a new object for all static graphics
   safeContent[0] = loadImage("safeContent1.png");  // Images saved in the accompanying 'data' folder
-  safeContent[1] = loadImage("safeContent2.png");  // Add new additional images here as needed for the array 
+  safeContent[1] = loadImage("safeContent2.png");
+  safeContent[2] = loadImage("safeContent3.png");
+  safeContent[3] = loadImage("safeContent4.png");  // Add new additional images here as needed for the array 
   safeDoor = new Portal();                         // Safe door that moves and drawn above the safe content
 }
 
