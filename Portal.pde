@@ -154,7 +154,7 @@ class Portal {
     randCog2 = int(random(0, cogRadialOutRing2.length)); 
     cogRadialOutRing2[randCog2].illuminateCog(colorLightTeal, colorOrange);
 
-    // Create radial pattern of bolts based on safe door lock/unlock/partial unlock state
+    // Create radial pattern of bolts based on safe door full/partial/not open state
     if (openPartSafe) {
       if (openFullSafe) {
         retraction = 0.3;    // Bolts retracted fully to depict fully open safe door

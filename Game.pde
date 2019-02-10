@@ -9,11 +9,9 @@ class GameAsset {
   int guideBoxH = 100;
   int roundCorner = 5;
   int margin = 10;
-  int alpha = 200;
+  int alpha = 220;
   color colorStartButton = color(colorDarkTeal, alpha);
   boolean hoverStartButton = false;
-  boolean introScreen = false;
-  boolean resetScreen = false;
   String startTitle = "CLOCK LOCK";
   String startGuide = "The safe has partially unlocked with a malfunction. Click START and the highlighted broken center cog to open the safe.";
   String resetGuide = "Click the highlighted center cog to open the safe. Click RESET to start again and reveal other contents in the safe.";
@@ -28,21 +26,14 @@ class GameAsset {
   // Class Methods
   
   // *******************************************************
-  //
+  // Manages the state of the game, including the position and open state of the safe door
   void gameState(){
     if(gameInPlay){
       openPartSafe = true;
       if(winGame){
         openFullSafe = true;
-        lockSafe = false;
         if(resetGame){
-           resetState();
-        }
-      }
-      else if(loseGame){                // loseGame state
-        lockSafe = true;
-        if(resetGame){
-           resetState();
+           resetState();        // Resets conditions so that game can start as new after win has been achieved
         }
       }
       else{
@@ -53,97 +44,44 @@ class GameAsset {
     }
     else{
       openPartSafe = false;
-      lockSafe = true;
       resetGame = false;
     }
   }
   
   // *******************************************************
-  //
+  // Activates reset conditions so that game can start as new
   void resetState(){
-    startGame = false;
+    startGame = false;          
     gameInPlay = false;
     winGame = false;
-    loseGame = false;
-    lockSafe = true;
     openPartSafe = false;
     openFullSafe = false;
-    safeXPos = 0;
-    safeYPos = 0;
-    hoverStartButton = false;
-    introScreen = false;
-    resetScreen = false;
-    safeImageCounter ++;
+    hoverStartButton = false;   
+    safeImageCounter ++;        // Increment to show the next image for the safe contents the next time game is played
   }
   
   // *******************************************************
-  //
-  
-  void activateGame(){
+  // Activates game play and reset states by evaluating state of start/reset buttons
+  void activateGame(){                      
      if(hoverStartButton && mousePressed){
-       if(resetScreen){
-         resetGame = true;                  // Declares game state of being reset
+       if(winGame){  
+         resetGame = true;               // Reset game state when reset button activated
        }
        else{
-         startGame = true;
+         startGame = true;               // Start game when start button activated
          gameInPlay = true;
        }
      }
-     else if(startGame && gameInPlay){
-       resetScreen = true;
-     }
-     else{
-       introScreen = true;
-     }
   }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  /**
-  void activateGame(){
-     if(hoverStartButton && mousePressed){
-       startGame = true;
-       gameInPlay = true;
-     }
-     else if(startGame && gameInPlay){
-       resetScreen = true;
-     }
-     else{
-       introScreen = true;
-     }
-  }
-  
-  // *******************************************************
-  //
-  void resetGame(){
-    if(resetScreen && hoverStartButton && mousePressed){
-      resetGame = true;                  // Declares game state of being reset
-    }
-    else{
-     // showGameScreen();
-    }
-  }
-**/
-
-
-
 
   // *******************************************************
   // Displays the user guide and start/reset button based on game conditions
   void showGameScreen(){
-    if(!startGame && !resetScreen){      // Display the start button and guide only when game is neither in play nor being reset
+    if(!startGame){                     // Display the start button and guide only when game is neither in play nor being reset
       splashScreenContent(startGuide);
       startButton("START");
     }
-    else{                                // In all other conditions, display the reset button and reset guide
+    else{                               // In all other conditions, display the reset button and reset guide
       splashScreenContent(resetGuide);
       startButton("RESET");
     }

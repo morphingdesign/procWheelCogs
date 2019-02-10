@@ -68,9 +68,7 @@ color colorButtonDark = color(120);
 boolean startGame = false;
 boolean gameInPlay = false;
 boolean winGame = false;
-boolean loseGame = false;
 boolean resetGame = false;
-boolean lockSafe = true;
 boolean openPartSafe = false;
 boolean openFullSafe = false;
 boolean cogSelected = false;
@@ -100,7 +98,6 @@ void draw() {
   // Game logic
   clockLockGame.gameState();       // Store and track game state as draw() is called
   clockLockGame.activateGame();    // Initiate game with UI guide and begin interactivity
-  //clockLockGame.resetGame();       // Reset game state back to start for a new game
   
   // Create scene elements
   mainScene.createBkgdCogs();      // Rotating cogs in background
