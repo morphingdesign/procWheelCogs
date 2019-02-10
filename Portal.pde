@@ -96,7 +96,7 @@ class Portal {
     float radius = 45;                                       // Radius from center of the safe origin
     for (int i=0; i < cogRadialSec.length; i++) {
       cogRadialSec[i].rotateCog(safeXPos, safeYPos, radius, angle);
-      angle += TWO_PI / cogRadialSec.length;
+      angle += TWO_PI / cogRadialSec.length;                 // Rotate origin angle to create next iteraction of cog
       int s = second();
       if (i == s/5) {                                        // Cog color changes when it syncs with sec
         cogRadialSec[i].updateCogColor(colorLightTeal);
@@ -109,7 +109,7 @@ class Portal {
     radius = 85;                                             // Radius from center of the safe origin
     for (int i=0; i < cogRadialMin.length; i++) {
       cogRadialMin[i].rotateCog(safeXPos, safeYPos, radius, angle);
-      angle += TWO_PI / cogRadialMin.length;
+      angle += TWO_PI / cogRadialMin.length;                 // Rotate origin angle to create next iteraction of cog
       int m = minute();
       if (i == m/5) {                                        // Cog color changes when it syncs with min
         cogRadialMin[i].updateCogColor(colorLightTeal);
@@ -122,10 +122,10 @@ class Portal {
     radius = 140;                                           // Radius from center of the safe origin  
     for (int i=0; i < cogRadialHr.length; i++) {
       cogRadialHr[i].rotateCog(safeXPos, safeYPos, radius, angle);
-      angle += TWO_PI / cogRadialHr.length;
+      angle += TWO_PI / cogRadialHr.length;                 // Rotate origin angle to create next iteraction of cog
       int h = hour();
       if (h > 12) {
-        h -= 12;
+        h -= 12;                                           // Convert 24 hr system to 12 hour system
       }
       if (i == h) {                                        // Cog color changes when it syncs with hr
         cogRadialHr[i].updateCogColor(colorLightTeal);
@@ -139,13 +139,13 @@ class Portal {
     for (int i=0; i < cogRadialOutRing1.length; i++) {
       cogRadialOutRing1[i].rotateCog(safeXPos, safeYPos, 195, angle);          // Create the innermost of the 2 rings
       cogRadialOutRing1Detail[i].rotateCog(safeXPos, safeYPos, 195, angle);    // Create the inset cog within each larger cog
-      angle += TWO_PI / cogRadialOutRing1.length;
+      angle += TWO_PI / cogRadialOutRing1.length;          // Rotate origin angle to create next iteraction of cog
     }
     angle = 25;                                            // Offset outer ring angle so that cogs align with cogs in inner ring
     for (int i=0; i < cogRadialOutRing2.length; i++) {
       cogRadialOutRing2[i].rotateCog(safeXPos, safeYPos, 220, angle);          // Create the outermost of the 2 rings
       cogRadialOutRing2Detail[i].rotateCog(safeXPos, safeYPos, 220, angle);    // Create the inset cog within each larger cog
-      angle += TWO_PI / cogRadialOutRing2.length;
+      angle += TWO_PI / cogRadialOutRing2.length;          // Rotate origin angle to create next iteraction of cog
     }
 
     // Illuminate random cogs in the 2 outer rings of cogs so they appear to be blinking sporadically
@@ -170,79 +170,55 @@ class Portal {
   }
 
   // *******************************************************
-  //
+  // Create radial array of bolts
   void allBolts() {  
     float angle = 0;
     for (int i=0; i < boltRadial.length; i++) {
-      boltRadial[i].radialBolt(safeXPos, safeYPos, angle, retractBolt);
-      boltRadial[i].radialBolt(safeXPos, safeYPos, angle, !retractBolt);
-      angle += TWO_PI / boltRadial.length;
+      boltRadial[i].radialBolt(safeXPos, safeYPos, angle, retractBolt);    // Create the rectangle with retraction functionality
+      boltRadial[i].radialBolt(safeXPos, safeYPos, angle, !retractBolt);   // Create the base static rectangles for the bolt
+      angle += TWO_PI / boltRadial.length;                                 // Rotate origin angle to create next bolt in for loop
     }
   }
 
   // *******************************************************
-  //
+  // Manage state of safe door throughout game play
   void portalInPlay() {
-    if (startGame) {
-      cogButtons();
-      portalPosition();
-    }
-  }
-
-  // *******************************************************
-  // Control position of portal
-  void portalPosition() {
-    if (winGame) {
-      if (resetGame) {
-        resetPortal();
-      } else {
-        movePortal();
-      }
-    } else {
-    }
-  }
-
-  // *******************************************************
-  //
-  void movePortal() {
-    safeDoorCogs[6].updateCogColor(brokenCogLight);
-    for (int i=0; i < safeDoorCogs.length; i++) {
-      safeXPos += 1; 
-      translate(safeXPos, safeYPos);
-    }
-  }
-
-  // *******************************************************
-  //
-  void resetPortal() {
-    safeDoorCogs[6].updateCogColor(brokenCogLight);
-    for (int i=0; i < safeDoorCogs.length; i++) {
-      safeXPos = width/2; 
-      translate(safeXPos, safeYPos);
-    }
-  }
-
-  // *******************************************************
-  //
-  void cogButtons() {
-    updateCenterCogState(int(safeXPos - centerCogDiaOut/2), int(safeYPos - centerCogDiaOut/2), centerCogDiaOut, centerCogDiaOut);
-    if (startGame) {
-      if (centerCogState) {
-        safeDoorCogs[6].updateCogColor(colorLightTeal);
-        if (mousePressed) {
-          winGame = true;
-          safeDoorCogs[6].updateCogColor(colorBlack);
+    if (startGame) {                          // Conditional to control position of safeDoor after game start
+      centerCogButton();                      // Enable center cog button for opening door
+      if (winGame) {                          // Conditional to control position of safeDoor only after successful center cog button click
+        safeDoorCogs[6].updateCogColor(brokenCogLight);    // Reset center cog color back to its base default color
+        for (int i=0; i < safeDoorCogs.length; i++) {
+          if (resetGame) {
+            safeXPos = width/2;               // Reset safe door back to its original position
+          }
+          else{
+            safeXPos += 1;                    // Move safe door from origin to the right
+          }
         }
-      } else {
-        safeDoorCogs[6].illuminateCog(brokenCogDark, brokenCogLight);
+        translate(safeXPos, safeYPos);  
       }
     }
   }
 
   // *******************************************************
-  //
+  // Define state of center cog when enabled as a button
+  void centerCogButton() {
+    updateCenterCogState(int(safeXPos - centerCogDiaOut/2), int(safeYPos - centerCogDiaOut/2), centerCogDiaOut, centerCogDiaOut);
+    if (centerCogState) {                                // Reads state of boolean when mouse hovers over center cog
+      safeDoorCogs[6].updateCogColor(colorLightTeal);    // Highlights cog color when mouse hovers over center cog
+      if (mousePressed) {                                // State of winGame and cog color when mouse is clicked over cog
+        winGame = true;                                  // Declares game state of successful completion 
+        safeDoorCogs[6].updateCogColor(colorBlack);
+      }
+    } else {                                             
+      safeDoorCogs[6].illuminateCog(brokenCogDark, brokenCogLight);    // Center cog changes color to appear blinking 
+    }
+  }
+
+  // *******************************************************
+  // Method using a boolean to identify if mouse is hovering over its geometry
   void updateCenterCogState(int bX, int bY, int bW, int bH) {
-    if (centerCogButton.hoverButton(bX, bY, bW, bH)) {
+    if (centerCogButton.hoverButton(bX, bY, bW, bH)) {    // Uses Game().hoverButton method to modify state of boolean for mouse hover
       centerCogState = true;
     } else {
       centerCogState = false;
